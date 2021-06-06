@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ArtistQuestionScreen() {
+function SignIn() {
   return (
     <div className="page page--gray page--login">
       <header className="header">

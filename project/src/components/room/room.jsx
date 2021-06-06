@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ArtistQuestionScreen() {
+function Room() {
   return (
     <div className="page">
       <header className="header">
