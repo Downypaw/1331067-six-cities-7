@@ -1,25 +1,24 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
+import Logo from '../logo/logo';
 
 function NotFoundScreen() {
   return (
-    <div class="page">
-      <header class="header">
-        <div class="container">
-          <div class="header__wrapper">
-            <div class="header__left">
-              <a class="header__logo-link header__logo-link--active">
-                <img class="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41">
-              </a>
-            </div>
+    <div className="page">
+      <header className="header">
+        <div className="container">
+          <div className="header__wrapper">
+            <Logo />
           </div>
         </div>
       </header>
+      <main classNameName="page__main">
+        <div classNameName="container">
+          <h1>404. Page not found</h1>
+          <Link to="/">Вернуться на главную</Link>
+        </div>
+      </main>
     </div>
-
-    <main className="page__main">
-      <h1>404. Page not found</h1>
-      <a href="/">Вернуться на главную</a>
-    </main>
   );
 }
 
