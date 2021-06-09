@@ -4,7 +4,7 @@ import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import MainPageScreen from '../main-page/main-page';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
-import NotFoundScreen from '../no-found-screen/no-found-screen';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 import RoomScreen from '../room/room';
 import SignInScreen from '../sign-in/sign-in';
 
@@ -14,7 +14,7 @@ function App(props) {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path={AppRoute.MAIN}>
+        <Route exact path={AppRoute.INDEX}>
           <MainPageScreen
             cards={cards}
           />
@@ -25,7 +25,7 @@ function App(props) {
         <Route exact path={AppRoute.ROOM}>
           <RoomScreen />
         </Route>
-        <Route exact path={AppRoute.SIGNIN}>
+        <Route exact path={AppRoute.SIGN_IN}>
           <SignInScreen />
         </Route>
         <Route>
