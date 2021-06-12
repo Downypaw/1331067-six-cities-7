@@ -12,8 +12,8 @@ function NotFoundScreen() {
           </div>
         </div>
       </header>
-      <main classNameName="page__main">
-        <div classNameName="container">
+      <main className="page__main">
+        <div className="container">
           <h1>404. Page not found</h1>
           <Link to="/">Вернуться на главную</Link>
         </div>

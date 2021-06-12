@@ -1,21 +1,17 @@
 import React from 'react';
 import {Link, useHistory} from 'react-router-dom';
-import offerProp from '../props-validation/offer.prop';
 import {AppRoute} from '../../const';
+import offerProp from '../props-validation/offer.prop';
 
-function Card(props) {
+function OtherOfferCard(props) {
   const {offer} = props;
-  const {id, previewImage, price, isFavorite, isPremium, rating, title, type} = offer;
+  const {id, previewImage, price, isFavorite, rating, title, type} = offer;
 
   const history = useHistory();
 
   return (
-    <article className="cities__place-card place-card">
-      {isPremium &&
-        <div className="place-card__mark">
-          <span>Premium</span>
-        </div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+    <article className="near-places__card place-card">
+      <div className="near-places__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
         </a>
@@ -30,7 +26,7 @@ function Card(props) {
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">In bookmarks</span>
+            <span className="visually-hidden">To bookmarks</span>
           </button>
         </div>
         <div className="place-card__rating rating">
@@ -48,8 +44,8 @@ function Card(props) {
   );
 }
 
-Card.propTypes = {
+OtherOfferCard.propTypes = {
   offer: offerProp,
 };
 
-export default Card;
+export default OtherOfferCard;
