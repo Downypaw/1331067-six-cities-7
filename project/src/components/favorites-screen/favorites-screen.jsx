@@ -2,20 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import offerProp from '../props-validation/offer.prop';
 import {City} from '../../const';
-import {filter} from '../../util/filter';
 import Header from '../header/header';
 import FavoriteItem from '../favorite-item/favorite-item';
 
-function FavoritesScreen(props) {
+export default function FavoritesScreen(props) {
   const {offers} = props;
 
   const offersByCities = {
-    [City.PARIS]: filter[City.PARIS](offers),
-    [City.COLOGNE]: filter[City.COLOGNE](offers),
-    [City.BRUSSELS]: filter[City.BRUSSELS](offers),
-    [City.AMSTERDAM]: filter[City.AMSTERDAM](offers),
-    [City.HAMBURG]: filter[City.HAMBURG](offers),
-    [City.DUSSELDORF]: filter[City.DUSSELDORF](offers),
+    [City.PARIS]: offers.filter((offer) => offer.city.name === City.PARIS),
+    [City.COLOGNE]: offers.filter((offer) => offer.city.name === City.COLOGNE),
+    [City.BRUSSELS]: offers.filter((offer) => offer.city.name === City.BRUSSELS),
+    [City.AMSTERDAM]: offers.filter((offer) => offer.city.name === City.AMSTERDAM),
+    [City.HAMBURG]: offers.filter((offer) => offer.city.name === City.HAMBURG),
+    [City.DUSSELDORF]: offers.filter((offer) => offer.city.name === City.DUSSELDORF),
   };
 
   return (
@@ -46,5 +45,3 @@ function FavoritesScreen(props) {
 FavoritesScreen.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
 };
-
-export default FavoritesScreen;

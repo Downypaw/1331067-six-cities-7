@@ -6,11 +6,11 @@ import {AppRoute} from '../../const';
 import Logo from '../logo/logo';
 import Review from '../review/review';
 import ReviewsForm from '../reviews-form/reviews-form';
-import OtherOfferCard from '../other-offer-card/other-offer-card';
+import NearPlaceCard from '../near-place-card/near-place-card';
 import offerProp from '../props-validation/offer.prop';
 import reviewProp from '../props-validation/review.prop';
 
-function Offer(props) {
+export default function Offer(props) {
   const {offer, reviews, otherOffers} = props;
   const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, goods, host, description} = offer;
   const history = useHistory();
@@ -136,7 +136,7 @@ function Offer(props) {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {otherOffers.map((otherOffer) => <OtherOfferCard key={otherOffer.id} offer={otherOffer}/>)}
+              {otherOffers.map((otherOffer) => <NearPlaceCard key={otherOffer.id} offer={otherOffer}/>)}
             </div>
           </section>
         </div>
@@ -150,5 +150,3 @@ Offer.propTypes = {
   otherOffers: PropTypes.arrayOf(offerProp).isRequired,
   reviews: PropTypes.arrayOf(reviewProp).isRequired,
 };
-
-export default Offer;

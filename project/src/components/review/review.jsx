@@ -1,7 +1,7 @@
 import React from 'react';
 import reviewProp from '../props-validation/review.prop';
 
-function Review(props) {
+export default function Review(props) {
   const {review} = props;
   const {user, rating, comment, date} = review;
   return (
@@ -33,5 +33,3 @@ function Review(props) {
 Review.propTypes = {
   review: reviewProp,
 };
-
-export default Review;

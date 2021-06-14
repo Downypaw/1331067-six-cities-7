@@ -3,7 +3,7 @@ import {Link, useHistory} from 'react-router-dom';
 import offerProp from '../props-validation/offer.prop';
 import {AppRoute} from '../../const';
 
-function Card(props) {
+export default function Card(props) {
   const {offer} = props;
   const {id, previewImage, price, isFavorite, isPremium, rating, title, type} = offer;
 
@@ -51,5 +51,3 @@ function Card(props) {
 Card.propTypes = {
   offer: offerProp,
 };
-
-export default Card;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-function Logo() {
+export default function Logo() {
   return (
     <div className="header__left">
       <Link className="header__logo-link" to="/">
@@ -10,5 +10,3 @@ function Logo() {
     </div>
   );
 }
-
-export default Logo;

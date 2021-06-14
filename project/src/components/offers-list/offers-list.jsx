@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import Card from '../card/card';
 import offerProp from '../props-validation/offer.prop';
 
-function OffersList(props) {
-  //const [activeCard, setActiveCard] = useState(0);
+export default function OffersList(props) {
   const {offers} = props;
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -16,5 +15,3 @@ function OffersList(props) {
 OffersList.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
 };
-
-export default OffersList;

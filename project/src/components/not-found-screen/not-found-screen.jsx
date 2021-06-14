@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import Logo from '../logo/logo';
 
-function NotFoundScreen() {
+export default function NotFoundScreen() {
   return (
     <div className="page">
       <header className="header">
@@ -21,5 +21,3 @@ function NotFoundScreen() {
     </div>
   );
 }
-
-export default NotFoundScreen;

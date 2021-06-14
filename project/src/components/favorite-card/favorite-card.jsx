@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import offerProp from '../props-validation/offer.prop';
 
-function FavoriteCard(props) {
+export default function FavoriteCard(props) {
   const {offer} = props;
   const {id, previewImage, price, isFavorite, isPremium, rating, title, type} = offer;
 
@@ -48,5 +48,3 @@ function FavoriteCard(props) {
 FavoriteCard.propTypes = {
   offer: offerProp,
 };
-
-export default FavoriteCard;

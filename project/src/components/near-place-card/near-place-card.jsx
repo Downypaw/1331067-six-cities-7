@@ -3,7 +3,7 @@ import {Link, useHistory} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import offerProp from '../props-validation/offer.prop';
 
-function OtherOfferCard(props) {
+export default function NearPlaceCard(props) {
   const {offer} = props;
   const {id, previewImage, price, isFavorite, rating, title, type} = offer;
 
@@ -44,8 +44,6 @@ function OtherOfferCard(props) {
   );
 }
 
-OtherOfferCard.propTypes = {
+NearPlaceCard.propTypes = {
   offer: offerProp,
 };
-
-export default OtherOfferCard;

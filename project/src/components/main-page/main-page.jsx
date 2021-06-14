@@ -6,7 +6,7 @@ import Header from '../header/header';
 import offerProp from '../props-validation/offer.prop';
 import {City} from '../../const';
 
-function MainPage(props) {
+export default function MainPage(props) {
   const [activeCity] = useState(City.PARIS);
   const {offers} = props;
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
@@ -89,5 +89,3 @@ function MainPage(props) {
 MainPage.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
 };
-
-export default MainPage;

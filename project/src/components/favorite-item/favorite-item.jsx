@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import offerProp from '../props-validation/offer.prop';
 import FavoriteCard from '../favorite-card/favorite-card';
 
-function FavoriteItem(props) {
+export default function FavoriteItem(props) {
   const {city, offers} = props;
 
   return (
@@ -26,5 +26,3 @@ FavoriteItem.propTypes = {
   city: PropTypes.string.isRequired,
   offers: PropTypes.arrayOf(offerProp).isRequired,
 };
-
-export default FavoriteItem;

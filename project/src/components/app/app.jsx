@@ -10,7 +10,7 @@ import SignInScreen from '../sign-in/sign-in';
 import offerProp from '../props-validation/offer.prop';
 import reviewProp from '../props-validation/review.prop';
 
-function App(props) {
+export default function App(props) {
   const {offers, reviews} = props;
 
   return (
@@ -34,7 +34,7 @@ function App(props) {
             <OfferScreen
               offer={currentOffer}
               otherOffers={otherOffers}
-              reviews={reviews[0]}
+              reviews={reviews}
             />
           );
         }}
@@ -53,7 +53,5 @@ function App(props) {
 
 App.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.arrayOf(reviewProp).isRequired).isRequired,
+  reviews: PropTypes.arrayOf(reviewProp).isRequired,
 };
-
-export default App;
