@@ -2,5 +2,14 @@ export const AppRoute = {
   SIGN_IN: '/login',
   FAVORITES: '/favorites',
   INDEX: '/',
-  ROOM: '/offer/:id',
+  OFFER: '/offer/:id',
+};
+
+export const City = {
+  PARIS: 'Paris',
+  COLOGNE: 'Cologne',
+  BRUSSELS: 'Brussels',
+  AMSTERDAM: 'Amsterdam',
+  HAMBURG: 'Hamburg',
+  DUSSELDORF: 'Dusseldorf',
 };

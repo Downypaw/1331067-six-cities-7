@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from '../logo/logo';
 
-function SignIn() {
+export default function SignIn() {
   return (
     <div className="page page--gray page--login">
       <header className="header">
@@ -51,5 +51,3 @@ function SignIn() {
     </div>
   );
 }
-
-export default SignIn;
