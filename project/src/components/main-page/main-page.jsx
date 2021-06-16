@@ -2,14 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useState} from 'react';
 import OffersList from '../offers-list/offers-list';
+import EmptyOffersList from '../empty-offers-list/empty-offers-list';
 import Header from '../header/header';
 import offerProp from '../props-validation/offer.prop';
 import {City} from '../../const';
 
 export default function MainPage(props) {
-  const [activeCity] = useState(City.PARIS);
+  const [activeCity, setActiveCity] = useState(City.PARIS);
   const {offers} = props;
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
+
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -20,32 +22,50 @@ export default function MainPage(props) {
           <section className="locations container">
             <ul className="locations__list tabs__list">
               <li className="locations__item">
-                <a className={`locations__item-link tabs__item ${activeCity === City.PARIS ? 'tabs__item--active' : ''}`} href="#">
+                <a
+                  className={`locations__item-link tabs__item ${activeCity === City.PARIS ? 'tabs__item--active' : ''}`} href="#"
+                  onClick={() => setActiveCity(City.PARIS)}
+                >
                   <span>Paris</span>
                 </a>
               </li>
               <li className="locations__item">
-                <a className={`locations__item-link tabs__item ${activeCity === City.COLOGNE ? 'tabs__item--active' : ''}`} href="#">
+                <a
+                  className={`locations__item-link tabs__item ${activeCity === City.COLOGNE ? 'tabs__item--active' : ''}`} href="#"
+                  onClick={() => setActiveCity(City.COLOGNE)}
+                >
                   <span>Cologne</span>
                 </a>
               </li>
               <li className="locations__item">
-                <a className={`locations__item-link tabs__item ${activeCity === City.BRUSSELS ? 'tabs__item--active' : ''}`} href="#">
+                <a
+                  className={`locations__item-link tabs__item ${activeCity === City.BRUSSELS ? 'tabs__item--active' : ''}`} href="#"
+                  onClick={() => setActiveCity(City.BRUSSELS)}
+                >
                   <span>Brussels</span>
                 </a>
               </li>
               <li className="locations__item">
-                <a className={`locations__item-link tabs__item ${activeCity === City.AMSTERDAM ? 'tabs__item--active' : ''}`} href="#">
+                <a
+                  className={`locations__item-link tabs__item ${activeCity === City.AMSTERDAM ? 'tabs__item--active' : ''}`} href="#"
+                  onClick={() => setActiveCity(City.AMSTERDAM)}
+                >
                   <span>Amsterdam</span>
                 </a>
               </li>
               <li className="locations__item">
-                <a className={`locations__item-link tabs__item ${activeCity === City.HAMBURG ? 'tabs__item--active' : ''}`} href="#">
+                <a
+                  className={`locations__item-link tabs__item ${activeCity === City.HAMBURG ? 'tabs__item--active' : ''}`} href="#"
+                  onClick={() => setActiveCity(City.HAMBURG)}
+                >
                   <span>Hamburg</span>
                 </a>
               </li>
               <li className="locations__item">
-                <a className={`locations__item-link tabs__item ${activeCity === City.DUSSELDORF ? 'tabs__item--active' : ''}`} href="#">
+                <a
+                  className={`locations__item-link tabs__item ${activeCity === City.DUSSELDORF ? 'tabs__item--active' : ''}`} href="#"
+                  onClick={() => setActiveCity(City.DUSSELDORF)}
+                >
                   <span>Dusseldorf</span>
                 </a>
               </li>
@@ -53,33 +73,9 @@ export default function MainPage(props) {
           </section>
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{filteredOffers.length} places to stay in {activeCity}</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex="0">
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex="0">Popular</li>
-                  <li className="places__option" tabIndex="0">Price: low to high</li>
-                  <li className="places__option" tabIndex="0">Price: high to low</li>
-                  <li className="places__option" tabIndex="0">Top rated first</li>
-                </ul>
-              </form>
-              <OffersList
-                offers={filteredOffers}
-              />
-            </section>
-            <div className="cities__right-section">
-              <section className="cities__map map"></section>
-            </div>
-          </div>
+          {filteredOffers.length > 0
+            ? <OffersList activeCity={activeCity} offers={filteredOffers}/>
+            : <EmptyOffersList/>}
         </div>
       </main>
     </div>

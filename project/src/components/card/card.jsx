@@ -1,16 +1,21 @@
 import React from 'react';
 import {Link, useHistory} from 'react-router-dom';
+import PropTypes from 'prop-types';
 import offerProp from '../props-validation/offer.prop';
 import {AppRoute} from '../../const';
 
 export default function Card(props) {
-  const {offer} = props;
+  const {offer, onOfferHover} = props;
   const {id, previewImage, price, isFavorite, isPremium, rating, title, type} = offer;
 
   const history = useHistory();
 
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card"
+      onMouseEnter={() => {
+        onOfferHover(id);
+      }}
+    >
       {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
@@ -50,4 +55,5 @@ export default function Card(props) {
 
 Card.propTypes = {
   offer: offerProp,
+  onOfferHover: PropTypes.func.isRequired,
 };
