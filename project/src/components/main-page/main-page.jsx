@@ -15,60 +15,21 @@ export default function MainPage(props) {
   return (
     <div className="page page--gray page--main">
       <Header />
-
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a
-                  className={`locations__item-link tabs__item ${activeCity === City.PARIS ? 'tabs__item--active' : ''}`} href="#"
-                  onClick={() => setActiveCity(City.PARIS)}
-                >
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a
-                  className={`locations__item-link tabs__item ${activeCity === City.COLOGNE ? 'tabs__item--active' : ''}`} href="#"
-                  onClick={() => setActiveCity(City.COLOGNE)}
-                >
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a
-                  className={`locations__item-link tabs__item ${activeCity === City.BRUSSELS ? 'tabs__item--active' : ''}`} href="#"
-                  onClick={() => setActiveCity(City.BRUSSELS)}
-                >
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a
-                  className={`locations__item-link tabs__item ${activeCity === City.AMSTERDAM ? 'tabs__item--active' : ''}`} href="#"
-                  onClick={() => setActiveCity(City.AMSTERDAM)}
-                >
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a
-                  className={`locations__item-link tabs__item ${activeCity === City.HAMBURG ? 'tabs__item--active' : ''}`} href="#"
-                  onClick={() => setActiveCity(City.HAMBURG)}
-                >
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a
-                  className={`locations__item-link tabs__item ${activeCity === City.DUSSELDORF ? 'tabs__item--active' : ''}`} href="#"
-                  onClick={() => setActiveCity(City.DUSSELDORF)}
-                >
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
+              {Object.values(City).map((city) => (
+                <li className="locations__item">
+                  <a
+                    className={`locations__item-link tabs__item ${activeCity === city ? 'tabs__item--active' : ''}`} href="#"
+                    onClick={() => setActiveCity(city)}
+                  >
+                    <span>{city}</span>
+                  </a>
+                </li>
+              ))}
             </ul>
           </section>
         </div>
