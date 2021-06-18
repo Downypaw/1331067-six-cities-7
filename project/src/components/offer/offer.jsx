@@ -18,10 +18,10 @@ export default function Offer(props) {
   const history = useHistory();
 
   const cityLocation = offer.city.location;
-  const points = [offer, ...otherOffers].map((offer) => ({
-    offerId: offer.id,
-    offerCords: [offer.location.latitude, offer.location.longitude],
-    zoom: offer.location.zoom,
+  const points = [offer, ...otherOffers].map((item) => ({
+    offerId: item.id,
+    offerCords: [item.location.latitude, item.location.longitude],
+    zoom: item.location.zoom,
   }));
 
   return (

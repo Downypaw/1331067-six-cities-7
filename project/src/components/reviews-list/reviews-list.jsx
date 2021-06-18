@@ -10,9 +10,9 @@ export default function ReviewsList(props) {
     <ul className="reviews__list">
       {reviews.map((review) => <Review key={`${review.id}`} review={review}/>)}
     </ul>
-  )
+  );
 }
 
 ReviewsList.propTypes = {
   reviews: PropTypes.arrayOf(reviewProp).isRequired,
-}
+};

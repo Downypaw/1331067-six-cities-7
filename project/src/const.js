@@ -17,4 +17,4 @@ export const City = {
 export const MapType = {
   OFFER_PAGE: 'property',
   MAIN_PAGE: 'cities',
-}
+};

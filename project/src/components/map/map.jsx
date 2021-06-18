@@ -6,15 +6,13 @@ import {MapType} from '../../const';
 
 export default function Map({type, cityLocation, points, selectedPoint}) {
   const mapRef = useRef(null);
-  console.log(mapRef);
   useMap(mapRef, cityLocation, points, selectedPoint);
 
   return (
     <section className={`${type}__map map`}
       style={type !== MapType.OFFER_PAGE
         ? {height: '100%'}
-        : {}
-      }
+        : {}}
       ref={mapRef}
     >
     </section>
@@ -30,10 +28,10 @@ Map.propTypes = {
   }).isRequired,
   points: PropTypes.arrayOf(
     PropTypes.shape({
-    offerId: PropTypes.number.isRequired,
-    offerCords: PropTypes.arrayOf(PropTypes.number).isRequired,
-    zoom: PropTypes.number.isRequired,
-    })
+      offerId: PropTypes.number.isRequired,
+      offerCords: PropTypes.arrayOf(PropTypes.number).isRequired,
+      zoom: PropTypes.number.isRequired,
+    }),
   ),
   selectedPoint: PropTypes.number,
 };
