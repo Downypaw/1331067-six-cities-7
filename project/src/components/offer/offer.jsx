@@ -4,9 +4,11 @@ import {nanoid} from 'nanoid';
 import PropTypes from 'prop-types';
 import {AppRoute} from '../../const';
 import Logo from '../logo/logo';
-import Review from '../review/review';
+import ReviewsList from '../reviews-list/reviews-list';
 import ReviewsForm from '../reviews-form/reviews-form';
 import NearPlaceCard from '../near-place-card/near-place-card';
+import Map from '../map/map';
+import {MapType} from '../../const';
 import offerProp from '../props-validation/offer.prop';
 import reviewProp from '../props-validation/review.prop';
 
@@ -14,6 +16,13 @@ export default function Offer(props) {
   const {offer, reviews, otherOffers} = props;
   const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, goods, host, description} = offer;
   const history = useHistory();
+
+  const cityLocation = offer.city.location;
+  const points = [offer, ...otherOffers].map((offer) => ({
+    offerId: offer.id,
+    offerCords: [offer.location.latitude, offer.location.longitude],
+    zoom: offer.location.zoom,
+  }));
 
   return (
     <div className="page">
@@ -122,15 +131,13 @@ export default function Offer(props) {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ul className="reviews__list">
-                  {reviews.map((review) => <Review key={`${review.id}`} review={review}/>)}
-                </ul>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                <ReviewsList reviews={reviews}/>
                 <ReviewsForm />
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <Map type={MapType.OFFER_PAGE} cityLocation={cityLocation} points={points} selectedPoint={offer.id}/>
         </section>
         <div className="container">
           <section className="near-places places">
