@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Card from '../card/card';
 import Map from '../map/map';
 import offerProp from '../props-validation/offer.prop';
+import {MapType} from '../../const';
 
 export default function OffersList(props) {
   const [selectedPoint, setSelectedPoint] = useState(0);
@@ -56,7 +57,7 @@ export default function OffersList(props) {
       </section>
       <div className="cities__right-section">
         <section className="cities__map map">
-          <Map cityLocation={cityLocation} points={points} selectedPoint={selectedPoint}/>
+          <Map type={MapType.MAIN_PAGE} cityLocation={cityLocation} points={points} selectedPoint={selectedPoint}/>
         </section>
       </div>
     </div>

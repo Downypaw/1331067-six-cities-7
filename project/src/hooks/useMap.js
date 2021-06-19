@@ -2,6 +2,11 @@ import {useEffect, useState} from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
+const ICON_WIDTH = 30;
+const ICON_HEIGHT = 30;
+const CORD_X = 15;
+const CORD_Y = 30;
+
 export default function useMap(mapRef, cityLocation, points, selectedPoint) {
   const [map, setMap] = useState(null);
   const {latitude, longitude, zoom} = cityLocation;
@@ -29,14 +34,14 @@ export default function useMap(mapRef, cityLocation, points, selectedPoint) {
   useEffect(() => {
     const icon = leaflet.icon({
       iconUrl: 'img/pin.svg',
-      iconSize: [30, 30],
-      iconAnchor: [15, 30],
+      iconSize: [ICON_WIDTH, ICON_HEIGHT],
+      iconAnchor: [CORD_X, CORD_Y],
     });
 
     const activeIcon = leaflet.icon({
       iconUrl: 'img/pin-active.svg',
-      iconSize: [30, 30],
-      iconAnchor: [15, 30],
+      iconSize: [ICON_WIDTH, ICON_HEIGHT],
+      iconAnchor: [CORD_X, CORD_Y],
     });
 
     if (map) {

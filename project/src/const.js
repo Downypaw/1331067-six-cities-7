@@ -13,3 +13,8 @@ export const City = {
   HAMBURG: 'Hamburg',
   DUSSELDORF: 'Dusseldorf',
 };
+
+export const MapType = {
+  OFFER_PAGE: 'property',
+  MAIN_PAGE: 'cities',
+};
