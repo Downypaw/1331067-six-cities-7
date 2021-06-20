@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 import {AppRoute} from '../../const';
 import MainPageScreen from '../main-page/main-page';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
@@ -10,7 +11,7 @@ import SignInScreen from '../sign-in/sign-in';
 import offerProp from '../props-validation/offer.prop';
 import reviewProp from '../props-validation/review.prop';
 
-export default function App(props) {
+export function App(props) {
   const {offers, reviews} = props;
 
   return (
@@ -55,3 +56,9 @@ App.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
   reviews: PropTypes.arrayOf(reviewProp).isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+});
+
+export default connect(mapStateToProps, null)(App);
