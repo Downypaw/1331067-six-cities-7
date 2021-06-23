@@ -18,3 +18,20 @@ export const MapType = {
   OFFER_PAGE: 'property',
   MAIN_PAGE: 'cities',
 };
+
+export const SortingType = {
+  POPULAR: 'Popular',
+  TO_HIGH_PRICE: 'Price: low to high',
+  TO_LOW_PRICE: 'Price: high to low',
+  TOP_RATED: 'Top rated first',
+};
+
+export const SortingProperty = {
+  PRICE: 'price',
+  RATING: 'rating',
+};
+
+export const SortingDirection = {
+  INCREASING: 'increasing',
+  DECREASING: 'decreasing',
+};
