@@ -1,20 +1,10 @@
-export const sortOffersPriceToHigh = (offerA, offerB) => {
-  const valueA = offerA.price;
-  const valueB = offerB.price;
+import {SortingDirection} from '../const';
 
-  return valueA - valueB;
-};
 
-export const sortOffersPriceToLow = (offerA, offerB) => {
-  const valueA = offerA.price;
-  const valueB = offerB.price;
-
-  return valueB - valueA;
-};
-
-export const sortOffersRating = (offerA, offerB) => {
-  const valueA = offerA.rating;
-  const valueB = offerB.rating;
-
-  return valueB - valueA;
+export const sortByProperty = (property, type = SortingDirection.INCREASING) => {
+  if (type === SortingDirection.INCREASING) {
+    return (offerA, offerB) => offerA[property] - offerB[property];
+  } else {
+    return (offerA, offerB) => offerB[property] - offerA[property];
+  }
 };

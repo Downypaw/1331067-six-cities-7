@@ -5,23 +5,23 @@ import Card from '../card/card';
 import Map from '../map/map';
 import Sorting from '../sorting/sorting';
 import offerProp from '../props-validation/offer.prop';
-import {MapType, SortingOption} from '../../const';
-import {sortOffersPriceToHigh, sortOffersPriceToLow, sortOffersRating} from '../../util/sorting';
+import {MapType, SortingType, SortingProperty, SortingDirection} from '../../const';
+import {sortByProperty} from '../../util/sorting';
 
 export default function OffersList(props) {
   const [selectedPoint, setSelectedPoint] = useState(0);
-  const [activeOption, setActiveOption] = useState(SortingOption.POPULAR);
+  const [activeOption, setActiveOption] = useState(SortingType.POPULAR);
 
   const {offers, activeCity} = props;
 
   const getSortedOffers = (optionType) => {
     switch (optionType) {
-      case SortingOption.TO_HIGHT_PRICE:
-        return offers.slice().sort(sortOffersPriceToHigh);
-      case SortingOption.TO_LOW_PRICE:
-        return offers.slice().sort(sortOffersPriceToLow);
-      case SortingOption.TOP_RATED:
-        return offers.slice().sort(sortOffersRating);
+      case SortingType.TO_HIGHT_PRICE:
+        return offers.slice().sort(sortByProperty(SortingProperty.PRICE));
+      case SortingType.TO_LOW_PRICE:
+        return offers.slice().sort(sortByProperty(SortingProperty.PRICE, SortingDirection.DECREASING));
+      case SortingType.TOP_RATED:
+        return offers.slice().sort(sortByProperty(SortingProperty.RATING, SortingDirection.DECREASING));
       default:
         return offers;
     }
