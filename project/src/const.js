@@ -35,3 +35,9 @@ export const SortDirection = {
   INCREASING: 'increasing',
   DECREASING: 'decreasing',
 };
+
+export const AuthorizationStatus = {
+  AUTH: 'AUTH',
+  NO_AUTH: 'NO_AUTH',
+  UNKNOWN: 'UNKNOWN',
+};
