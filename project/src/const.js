@@ -19,19 +19,19 @@ export const MapType = {
   MAIN_PAGE: 'cities',
 };
 
-export const SortingType = {
+export const SortType = {
   POPULAR: 'Popular',
   TO_HIGH_PRICE: 'Price: low to high',
   TO_LOW_PRICE: 'Price: high to low',
   TOP_RATED: 'Top rated first',
 };
 
-export const SortingProperty = {
+export const SortProperty = {
   PRICE: 'price',
   RATING: 'rating',
 };
 
-export const SortingDirection = {
+export const SortDirection = {
   INCREASING: 'increasing',
   DECREASING: 'decreasing',
 };
