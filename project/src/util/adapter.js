@@ -9,13 +9,13 @@ export const adaptOfferToClient = (offer) => {
         {
           avatarUrl: offer.host.avatar_url,
           isPro: offer.host.is_pro,
-        }
+        },
       ),
       isFavorite: offer.is_favorite,
       isPremium: offer.is_premium,
       maxAdults: offer.max_adults,
       previewImage: offer.preview_image,
-    }
+    },
   );
 
   delete adaptedOffer.host.avatar_url;
@@ -26,7 +26,7 @@ export const adaptOfferToClient = (offer) => {
   delete adaptedOffer.preview_image;
 
   return adaptedOffer;
-}
+};
 
 export const adaptOfferToServer = (offer) => {
   const adaptedOffer = Object.assign(
@@ -37,15 +37,15 @@ export const adaptOfferToServer = (offer) => {
         {},
         offer.host,
         {
-          "avatar_url": offer.host.avatarUrl,
-          "is_pro": offer.host.isPro,
-        }
+          'avatar_url': offer.host.avatarUrl,
+          'is_pro': offer.host.isPro,
+        },
       ),
-      "is_favorite": offer.isFavorite,
-      "is_premium": offer.isPremium,
-      "max_adults": offer.maxAdults,
-      "preview_image": offer.previewImage,
-    }
+      'is_favorite': offer.isFavorite,
+      'is_premium': offer.isPremium,
+      'max_adults': offer.maxAdults,
+      'preview_image': offer.previewImage,
+    },
   );
 
   delete adaptedOffer.host.avatarUrl;
@@ -56,4 +56,4 @@ export const adaptOfferToServer = (offer) => {
   delete adaptedOffer.previewImage;
 
   return adaptedOffer;
-}
+};
