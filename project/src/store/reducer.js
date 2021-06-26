@@ -4,8 +4,9 @@ import offers from '../mocks/offers';
 
 const initialState = {
   activeCity: City.PARIS,
-  offers: offers,
+  offers: [],
   authorizationStatus: AuthorizationStatus.UNKNOWN,
+  isDataLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -24,6 +25,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         offers: action.payload,
+        isDataLoaded: true,
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {

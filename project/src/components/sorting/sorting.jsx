@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useState} from 'react';
-import {Sortype} from '../../const';
+import {SortType} from '../../const';
 
 export default function Sorting(props) {
   const [listState, setListState] = useState('');
