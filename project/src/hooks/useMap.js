@@ -13,6 +13,12 @@ export default function useMap(mapRef, cityLocation, points, selectedPoint) {
   const city = [latitude, longitude];
 
   useEffect(() => {
+    if (map !== null) {
+      map.setView(city, zoom);
+    }
+  }, [map, cityLocation, zoom]);
+
+  useEffect(() => {
     if (mapRef.current !== null && map === null) {
       const instance = leaflet.map(mapRef.current, {
         center: city,
@@ -20,7 +26,6 @@ export default function useMap(mapRef, cityLocation, points, selectedPoint) {
         zoomControl: false,
         marker: true,
       });
-      instance.setView(city, zoom);
 
       leaflet
         .tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -29,7 +34,7 @@ export default function useMap(mapRef, cityLocation, points, selectedPoint) {
         .addTo(instance);
       setMap(instance);
     }
-  }, [mapRef, map, city]);
+  }, [mapRef, map, cityLocation, zoom]);
 
   useEffect(() => {
     const icon = leaflet.icon({

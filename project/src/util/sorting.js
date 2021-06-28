@@ -1,10 +1,4 @@
-import {SortingDirection} from '../const';
+import {SortDirection} from '../const';
 
 
-export const sortByProperty = (property, type = SortingDirection.INCREASING) => {
-  if (type === SortingDirection.INCREASING) {
-    return (offerA, offerB) => offerA[property] - offerB[property];
-  } else {
-    return (offerA, offerB) => offerB[property] - offerA[property];
-  }
-};
+export const sortByProperty = (property, type = SortDirection.INCREASING) => type === SortDirection.INCREASING ? (offerA, offerB) => offerA[property] - offerB[property] : (offerA, offerB) => offerB[property] - offerA[property];

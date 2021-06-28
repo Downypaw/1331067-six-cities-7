@@ -8,11 +8,19 @@ import FavoritesScreen from '../favorites-screen/favorites-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import OfferScreen from '../offer/offer';
 import SignInScreen from '../sign-in/sign-in';
+import LoadingScreen from '../loading-screen/loading-screen';
 import offerProp from '../props-validation/offer.prop';
 import reviewProp from '../props-validation/review.prop';
+import {AuthorizationStatus} from '../../const';
 
 export function App(props) {
-  const {offers, reviews} = props;
+  const {offers, reviews, authorizationStatus, isDataLoaded} = props;
+
+  if (authorizationStatus === AuthorizationStatus.UNKNOWN || !isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <BrowserRouter>
@@ -55,10 +63,14 @@ export function App(props) {
 App.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
   reviews: PropTypes.arrayOf(reviewProp).isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   offers: state.offers,
+  authorizationStatus: state.authorizationStatus,
+  isDataLoaded: state.isDataLoaded,
 });
 
 export default connect(mapStateToProps, null)(App);

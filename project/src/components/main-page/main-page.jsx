@@ -20,7 +20,7 @@ export function MainPage(props) {
         <CitiesList activeCity={activeCity} onCityChange={onCityChange}/>
         <div className="cities">
           {filteredOffers.length > 0
-            ? <OffersList activeCity={activeCity} offers={offers}/>
+            ? <OffersList activeCity={activeCity} offers={filteredOffers}/>
             : <EmptyOffersList/>}
         </div>
       </main>
