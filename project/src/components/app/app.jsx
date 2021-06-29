@@ -8,6 +8,7 @@ import FavoritesScreen from '../favorites-screen/favorites-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import OfferScreen from '../offer/offer';
 import SignInScreen from '../sign-in/sign-in';
+import PrivateRoute from '../private-route/private-route';
 import LoadingScreen from '../loading-screen/loading-screen';
 import offerProp from '../props-validation/offer.prop';
 import reviewProp from '../props-validation/review.prop';
@@ -30,11 +31,12 @@ export function App(props) {
             offers={offers}
           />
         </Route>
-        <Route exact path={AppRoute.FAVORITES}>
-          <FavoritesScreen
-            offers={offers.filter((offer) => offer.isFavorite)}
-          />
-        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoute.FAVORITES}
+          render={() => <FavoritesScreen offers={offers.filter((offer) => offer.isFavorite)}/>}
+        >
+        </PrivateRoute>
         <Route exact path={AppRoute.OFFER} render={(routeProps) => {
           const offerId = parseInt(routeProps.match.params.id, 10);
           const currentOffer = offers.find((offer) => offer.id === offerId);
