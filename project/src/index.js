@@ -9,7 +9,7 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import reviews from './mocks/reviews';
 import {reducer} from './store/reducer';
 import {ActionCreator} from './store/action';
-import {checkAuth, fetchOffersList} from './store/api-actions';
+import {checkAuth, fetchOffers} from './store/api-actions';
 import {AuthorizationStatus} from './const';
 
 const api = createAPI(
@@ -24,7 +24,7 @@ const store = createStore(
 );
 
 store.dispatch(checkAuth());
-store.dispatch(fetchOffersList());
+store.dispatch(fetchOffers());
 
 ReactDOM.render(
   <React.StrictMode>

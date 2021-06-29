@@ -32,8 +32,8 @@ export const SortProperty = {
 };
 
 export const SortDirection = {
-  INCREASING: 'increasing',
-  DECREASING: 'decreasing',
+  ASCENDING: 'ascending',
+  DESCENDING: 'descending',
 };
 
 export const AuthorizationStatus = {
