@@ -1,27 +1,36 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {AuthorizationStatus} from '../../const';
 import Logo from '../logo/logo';
+import UnauthorizedNavigation from '../unauthorized-navigation/unauthorized-navigation';
+import AuthorizedNavigation from '../authorized-navigation/authorized-navigation';
 
-export default function Header() {
+export function Header({authorizationStatus}) {
   return (
     <header className="header">
       <div className="container">
         <div className="header__wrapper">
           <Logo />
           <nav className="header__nav">
-            <ul className="header__nav-list">
-              <li className="header__nav-item user">
-                <Link className="header__nav-link header__nav-link--profile" to={AppRoute.SIGN_IN}>
-                  <div className="header__avatar-wrapper user__avatar-wrapper">
-                  </div>
-                  <span className="header__login">Sign in</span>
-                </Link>
-              </li>
-            </ul>
+            {
+              authorizationStatus === AuthorizationStatus.AUTH
+                ? <AuthorizedNavigation />
+                : <UnauthorizedNavigation />
+            }
           </nav>
         </div>
       </div>
     </header>
   );
 }
+
+Header.propTypes = {
+  authorizationStatus: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  authorizationStatus: state.authorizationStatus,
+});
+
+export default connect(mapStateToProps)(Header);

@@ -1,16 +1,12 @@
 import React, {useRef} from 'react';
 import Logo from '../logo/logo';
-import {useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {login} from '../../store/api-actions';
-import {AppRoute} from '../../const';
 
 export function SignIn({onSubmit}) {
   const loginRef = useRef();
   const passwordRef = useRef();
-
-  const history = useHistory();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -70,7 +66,6 @@ export function SignIn({onSubmit}) {
                 />
               </div>
               <button
-                onClick={() => history.push(AppRoute.INDEX)}
                 className="login__submit form__submit button"
                 type="submit"
               >

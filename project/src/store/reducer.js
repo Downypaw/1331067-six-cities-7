@@ -36,6 +36,17 @@ const reducer = (state = initialState, action) => {
         ...state,
         authorizationStatus: AuthorizationStatus.NO_AUTH,
       };
+    case ActionType.UPDATE_OFFER: {
+      const index = state.offers.findIndex((offer) => offer.id === action.payload.id);
+      return {
+        ...state,
+        offers: [
+          ...state.offers.slice(0, index),
+          action.payload,
+          ...state.offers.slice(index + 1),
+        ],
+      };
+    }
     default:
       return state;
   }

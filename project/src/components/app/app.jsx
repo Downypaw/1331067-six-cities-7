@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {AppRoute} from '../../const';
 import MainPageScreen from '../main-page/main-page';
@@ -13,6 +13,7 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import offerProp from '../props-validation/offer.prop';
 import reviewProp from '../props-validation/review.prop';
 import {AuthorizationStatus} from '../../const';
+import browserHistory from '../../browser-history';
 
 export function App(props) {
   const {offers, reviews, authorizationStatus, isDataLoaded} = props;
@@ -24,7 +25,7 @@ export function App(props) {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.INDEX}>
           <MainPageScreen
