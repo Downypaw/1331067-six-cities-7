@@ -1,13 +1,23 @@
 import React from 'react';
 import {Link, useHistory} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {toggleFavorite, getOffer} from '../../store/api-actions';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import offerProp from '../props-validation/offer.prop';
 
-export default function CardInformation(props) {
-  const {offer} = props;
+export function CardInformation(props) {
+  const {offer, authorizationStatus, onBookmarkClick} = props;
   const {id, price, isFavorite, rating, title, type} = offer;
 
   const history = useHistory();
+
+  const handleBookmarkClick = () => {
+    onBookmarkClick({
+      offerId: id,
+      status: Number(!isFavorite),
+    });
+  };
 
   return (
     <React.Fragment>
@@ -16,7 +26,13 @@ export default function CardInformation(props) {
           <b className="place-card__price-value">&euro;{price}</b>
           <span className="place-card__price-text">&#47;&nbsp;night</span>
         </div>
-        <button className={`place-card__bookmark-button ${isFavorite ? 'place-card__bookmark-button--active': ''} button`} onClick={() => history.push(AppRoute.SIGN_IN)} type="button">
+        <button
+          className={`place-card__bookmark-button ${isFavorite ? 'place-card__bookmark-button--active': ''} button`}
+          onClick={authorizationStatus === AuthorizationStatus.AUTH
+            ? handleBookmarkClick
+            : () => history.push(AppRoute.SIGN_IN)}
+          type="button"
+        >
           <svg className="place-card__bookmark-icon" width="18" height="19">
             <use xlinkHref="#icon-bookmark"></use>
           </svg>
@@ -39,4 +55,19 @@ export default function CardInformation(props) {
 
 CardInformation.propTypes = {
   offer: offerProp,
+  authorizationStatus: PropTypes.string.isRequired,
+  onBookmarkClick: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  authorizationStatus: state.authorizationStatus,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onBookmarkClick(offerId, status) {
+    dispatch(toggleFavorite(offerId, status));
+    dispatch(getOffer(offerId));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CardInformation);

@@ -32,8 +32,8 @@ export const SortProperty = {
 };
 
 export const SortDirection = {
-  INCREASING: 'increasing',
-  DECREASING: 'decreasing',
+  ASCENDING: 'ascending',
+  DESCENDING: 'descending',
 };
 
 export const AuthorizationStatus = {
@@ -46,4 +46,5 @@ export const APIRoute = {
   OFFERS: '/hotels',
   LOGIN: '/login',
   LOGOUT: '/logout',
+  FAVORITE: '/favorite',
 };

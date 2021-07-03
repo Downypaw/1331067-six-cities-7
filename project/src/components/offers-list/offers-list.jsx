@@ -16,12 +16,12 @@ export default function OffersList(props) {
 
   const getSortedOffers = (optionType) => {
     switch (optionType) {
-      case SortType.TO_HIGHT_PRICE:
+      case SortType.TO_HIGH_PRICE:
         return offers.slice().sort(sortByProperty(SortProperty.PRICE));
       case SortType.TO_LOW_PRICE:
-        return offers.slice().sort(sortByProperty(SortProperty.PRICE, SortDirection.DECREASING));
+        return offers.slice().sort(sortByProperty(SortProperty.PRICE, SortDirection.DESCENDING));
       case SortType.TOP_RATED:
-        return offers.slice().sort(sortByProperty(SortProperty.RATING, SortDirection.DECREASING));
+        return offers.slice().sort(sortByProperty(SortProperty.RATING, SortDirection.DESCENDING));
       default:
         return offers;
     }

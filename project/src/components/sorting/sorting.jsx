@@ -17,13 +17,13 @@ export default function Sorting(props) {
         </svg>
       </span>
       <ul className={`places__options places__options--custom ${listState}`}>
-        {Object.values(SortType).map((option) => {
-          const isActive = option === activeOption ? 'places__option--active' : '';
+        {Object.values(SortType).map((sortType) => {
+          const isActive = sortType === activeOption ? 'places__option--active' : '';
           return (
-            <li className={`places__option ${isActive}`} key={option} tabIndex="0"
-              onClick={() => onOptionChange(option)}
+            <li className={`places__option ${isActive}`} key={sortType} tabIndex="0"
+              onClick={() => onOptionChange(sortType)}
             >
-              {option}
+              {sortType}
             </li>
           );
         })}
