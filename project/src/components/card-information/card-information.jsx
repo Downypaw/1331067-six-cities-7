@@ -2,7 +2,7 @@ import React from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {toggleFavorite, getOffer} from '../../store/api-actions';
+import {toggleFavorite, getUpdatedOffer} from '../../store/api-actions';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import offerProp from '../props-validation/offer.prop';
 
@@ -66,7 +66,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onBookmarkClick(offerId, status) {
     dispatch(toggleFavorite(offerId, status));
-    dispatch(getOffer(offerId));
+    dispatch(getUpdatedOffer(offerId));
   },
 });
 

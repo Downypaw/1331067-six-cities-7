@@ -33,7 +33,7 @@ export const toggleFavorite = ({offerId, status}) => (dispatch, _getState, api) 
   api.post(`${APIRoute.FAVORITE}/${offerId}/${status}`)
 );
 
-export const getOffer = ({offerId}) => (dispatch, _getState, api) => (
+export const getUpdatedOffer = ({offerId}) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.OFFERS}/${offerId}`)
     .then(({data}) => dispatch(ActionCreator.updateOffer(adaptOfferToClient(data))))
 );
