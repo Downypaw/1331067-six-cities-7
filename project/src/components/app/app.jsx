@@ -40,10 +40,12 @@ export function App(props) {
         </PrivateRoute>
         <Route exact path={AppRoute.OFFER} render={(routeProps) => {
           const offerId = parseInt(routeProps.match.params.id, 10);
-          getDetailedData(offerId);
-          return (
-            <OfferScreen/>
-          );
+            if (offers.some((offer) => offer.id === offerId)) {
+              getDetailedData(offerId);
+              return <OfferScreen/>
+            } else {
+              return <NotFoundScreen />
+            }
         }}
         >
         </Route>
