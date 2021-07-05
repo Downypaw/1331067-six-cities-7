@@ -5,7 +5,12 @@ const initialState = {
   activeCity: City.PARIS,
   offers: [],
   authorizationStatus: AuthorizationStatus.UNKNOWN,
-  isDataLoaded: false,
+  isOffersLoaded: false,
+  detailedOffer: {},
+  nearbyOffers: [],
+  reviews: [],
+  detailedData: {},
+  isDetailedDataLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -24,7 +29,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         offers: action.payload,
-        isDataLoaded: true,
+        isOffersLoaded: true,
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
@@ -47,6 +52,16 @@ const reducer = (state = initialState, action) => {
         ],
       };
     }
+    case ActionType.LOAD_DETAILED_DATA:
+      return {
+        ...state,
+        detailedData: {
+          detailedOffer: action.payload.detailedOfferData,
+          nearbyOffers: action.payload.nearbyOffersData,
+          reviews: action.payload.reviewsData,
+        },
+        isDetailedDataLoaded: true,
+      };
     default:
       return state;
   }

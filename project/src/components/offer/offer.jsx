@@ -1,5 +1,6 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
+import {connect} from 'react-redux';
 import {nanoid} from 'nanoid';
 import PropTypes from 'prop-types';
 import {AppRoute} from '../../const';
@@ -8,17 +9,32 @@ import ReviewsList from '../reviews-list/reviews-list';
 import ReviewsForm from '../reviews-form/reviews-form';
 import NearPlaceCard from '../near-place-card/near-place-card';
 import Map from '../map/map';
-import {MapType} from '../../const';
+import LoadingScreen from '../loading-screen/loading-screen';
+import {MapType, MAX_IMAGES_COUNT} from '../../const';
 import offerProp from '../props-validation/offer.prop';
 import reviewProp from '../props-validation/review.prop';
 
-export default function Offer(props) {
-  const {offer, reviews, otherOffers} = props;
-  const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, goods, host, description} = offer;
+export function Offer(props) {
+  const {detailedData, isDetailedDataLoaded} = props;
+
+  if (!isDetailedDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
+  const {detailedOffer, nearbyOffers, reviews} = detailedData;
+
+  const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, goods, host, description} = detailedOffer;
+
+  const imagesForGalleryCount = images.length >= MAX_IMAGES_COUNT
+    ? MAX_IMAGES_COUNT
+    : images.length;
+
   const history = useHistory();
 
-  const cityLocation = offer.city.location;
-  const points = [offer, ...otherOffers].map((item) => ({
+  const cityLocation = detailedOffer.city.location;
+  const points = [detailedOffer, ...nearbyOffers].map((item) => ({
     offerId: item.id,
     offerCords: [item.location.latitude, item.location.longitude],
     zoom: item.location.zoom,
@@ -54,7 +70,7 @@ export default function Offer(props) {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((image, index) => (
+              {images.slice(0, imagesForGalleryCount).map((image, index) => (
                 <div className="property__image-wrapper" key={nanoid()}>
                   <img className="property__image" src={image} alt="Photo studio"/>
                 </div>
@@ -137,13 +153,13 @@ export default function Offer(props) {
               </section>
             </div>
           </div>
-          <Map type={MapType.OFFER_PAGE} cityLocation={cityLocation} points={points} selectedPoint={offer.id}/>
+          <Map type={MapType.OFFER_PAGE} cityLocation={cityLocation} points={points} selectedPoint={detailedOffer.id}/>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {otherOffers.map((otherOffer) => <NearPlaceCard key={otherOffer.id} offer={otherOffer}/>)}
+              {nearbyOffers.map((nearbyOffer) => <NearPlaceCard key={nearbyOffer.id} offer={nearbyOffer}/>)}
             </div>
           </section>
         </div>
@@ -152,8 +168,15 @@ export default function Offer(props) {
   );
 }
 
-Offer.propTypes = {
-  offer: offerProp,
-  otherOffers: PropTypes.arrayOf(offerProp).isRequired,
-  reviews: PropTypes.arrayOf(reviewProp).isRequired,
-};
+// Offer.propTypes = {
+//   detailedOffer: offerProp,
+//   nearbyOffers: PropTypes.arrayOf(offerProp).isRequired,
+//   reviews: PropTypes.arrayOf(reviewProp).isRequired,
+// };
+
+const mapStateToProps = (state) => ({
+  detailedData: state.detailedData,
+  isDetailedDataLoaded: state.isDetailedDataLoaded,
+});
+
+export default connect(mapStateToProps)(Offer);

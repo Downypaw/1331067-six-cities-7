@@ -16,9 +16,9 @@ import {AuthorizationStatus} from '../../const';
 import browserHistory from '../../browser-history';
 
 export function App(props) {
-  const {offers, reviews, authorizationStatus, isDataLoaded} = props;
+  const {offers, getDetailedData, authorizationStatus, isOffersLoaded} = props;
 
-  if (authorizationStatus === AuthorizationStatus.UNKNOWN || !isDataLoaded) {
+  if (authorizationStatus === AuthorizationStatus.UNKNOWN || !isOffersLoaded) {
     return (
       <LoadingScreen />
     );
@@ -40,14 +40,9 @@ export function App(props) {
         </PrivateRoute>
         <Route exact path={AppRoute.OFFER} render={(routeProps) => {
           const offerId = parseInt(routeProps.match.params.id, 10);
-          const currentOffer = offers.find((offer) => offer.id === offerId);
-          const otherOffers = offers.filter((offer) => offer.city.name === currentOffer.city.name && offer.id !== currentOffer.id);
+          getDetailedData(offerId);
           return (
-            <OfferScreen
-              offer={currentOffer}
-              otherOffers={otherOffers}
-              reviews={reviews}
-            />
+            <OfferScreen/>
           );
         }}
         >
@@ -65,15 +60,14 @@ export function App(props) {
 
 App.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
-  reviews: PropTypes.arrayOf(reviewProp).isRequired,
   authorizationStatus: PropTypes.string.isRequired,
-  isDataLoaded: PropTypes.bool.isRequired,
+  isOffersLoaded: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   offers: state.offers,
   authorizationStatus: state.authorizationStatus,
-  isDataLoaded: state.isDataLoaded,
+  isOffersLoaded: state.isOffersLoaded,
 });
 
 export default connect(mapStateToProps, null)(App);

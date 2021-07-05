@@ -1,6 +1,6 @@
 import {ActionCreator} from './action';
 import {AuthorizationStatus, AppRoute, APIRoute} from '../const';
-import {adaptOfferToClient} from '../util/adapter';
+import {adaptOfferToClient, adaptReviewToClient} from '../util/adapter';
 
 export const fetchOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS)
@@ -31,9 +31,21 @@ export const logout = () => (dispatch, _getState, api) => (
 
 export const toggleFavorite = ({offerId, status}) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.FAVORITE}/${offerId}/${status}`)
+    .then(({data}) => dispatch(ActionCreator.updateOffer(adaptOfferToClient(data))))
 );
 
-export const getUpdatedOffer = ({offerId}) => (dispatch, _getState, api) => (
-  api.get(`${APIRoute.OFFERS}/${offerId}`)
-    .then(({data}) => dispatch(ActionCreator.updateOffer(adaptOfferToClient(data))))
+export const getFullOfferInformation = (offerId) => (dispatch, _getState, api) => (
+  Promise.all([
+    api.get(`${APIRoute.OFFERS}/${offerId}`),
+    api.get(`${APIRoute.OFFERS}/${offerId}/nearby`),
+    api.get(`${APIRoute.REVIEWS}/${offerId}`)
+  ])
+  .then((data) => {
+    const [detailedOfferData, nearbyOffersData, reviewsData] = data;
+    dispatch(ActionCreator.loadDetailedData(
+      adaptOfferToClient(detailedOfferData.data),
+      nearbyOffersData.data.map((offer) => adaptOfferToClient(offer)),
+      reviewsData.data.map((review) => adaptReviewToClient(review))
+    ));
+  })
 );

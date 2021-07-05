@@ -9,7 +9,7 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import reviews from './mocks/reviews';
 import {reducer} from './store/reducer';
 import {ActionCreator} from './store/action';
-import {checkAuth, fetchOffers} from './store/api-actions';
+import {checkAuth, fetchOffers, getFullOfferInformation} from './store/api-actions';
 import {AuthorizationStatus} from './const';
 import {redirect} from './store/middlewares/redirect';
 
@@ -28,11 +28,15 @@ const store = createStore(
 store.dispatch(checkAuth());
 store.dispatch(fetchOffers());
 
+const getDetailedData = (offerId) => {
+  store.dispatch(getFullOfferInformation(offerId));
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <App
-        reviews={reviews}
+        getDetailedData={getDetailedData}
       />
     </Provider>
   </React.StrictMode>,

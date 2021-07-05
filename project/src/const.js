@@ -47,4 +47,7 @@ export const APIRoute = {
   LOGIN: '/login',
   LOGOUT: '/logout',
   FAVORITE: '/favorite',
+  REVIEWS: '/comments',
 };
+
+export const MAX_IMAGES_COUNT = 6;
