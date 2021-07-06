@@ -15,7 +15,7 @@ import {AuthorizationStatus} from '../../const';
 import browserHistory from '../../browser-history';
 
 export function App(props) {
-  const {offers, getDetailedData, authorizationStatus, isOffersLoaded} = props;
+  const {offers, getDetailedData, authorizationStatus, isOffersLoaded, isDetailedDataLoaded} = props;
 
   if (authorizationStatus === AuthorizationStatus.UNKNOWN || !isOffersLoaded) {
     return (
@@ -41,7 +41,7 @@ export function App(props) {
           const offerId = parseInt(routeProps.match.params.id, 10);
           if (offers.some((offer) => offer.id === offerId)) {
             getDetailedData(offerId);
-            return <OfferScreen/>;
+            return isDetailedDataLoaded ? <OfferScreen /> : <LoadingScreen />;
           } else {
             return <NotFoundScreen />;
           }
@@ -63,6 +63,7 @@ App.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   isOffersLoaded: PropTypes.bool.isRequired,
+  isDetailedDataLoaded: PropTypes.bool.isRequired,
   getDetailedData: PropTypes.func.isRequired,
 };
 
@@ -70,6 +71,7 @@ const mapStateToProps = (state) => ({
   offers: state.offers,
   authorizationStatus: state.authorizationStatus,
   isOffersLoaded: state.isOffersLoaded,
+  isDetailedDataLoaded: state.isDetailedDataLoaded,
 });
 
 export default connect(mapStateToProps, null)(App);

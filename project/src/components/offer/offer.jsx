@@ -8,21 +8,14 @@ import ReviewsList from '../reviews-list/reviews-list';
 import ReviewsForm from '../reviews-form/reviews-form';
 import NearPlaceCard from '../near-place-card/near-place-card';
 import Map from '../map/map';
-import LoadingScreen from '../loading-screen/loading-screen';
 import Header from '../header/header';
 import {MapType, MAX_IMAGES_COUNT, AuthorizationStatus} from '../../const';
 import offerProp from '../props-validation/offer.prop';
 import reviewProp from '../props-validation/review.prop';
 
 export function Offer(props) {
-  const {detailedData, isDetailedDataLoaded, authorizationStatus} = props;
+  const {detailedData, authorizationStatus} = props;
   const history = useHistory();
-
-  if (!isDetailedDataLoaded) {
-    return (
-      <LoadingScreen />
-    );
-  }
 
   const {detailedOffer, nearbyOffers, reviews} = detailedData;
 
@@ -154,13 +147,11 @@ Offer.propTypes = {
     nearbyOffers: PropTypes.arrayOf(offerProp).isRequired,
     reviews: PropTypes.arrayOf(reviewProp).isRequired,
   }).isRequired,
-  isDetailedDataLoaded: PropTypes.bool.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   detailedData: state.detailedData,
-  isDetailedDataLoaded: state.isDetailedDataLoaded,
   authorizationStatus: state.authorizationStatus,
 });
 
