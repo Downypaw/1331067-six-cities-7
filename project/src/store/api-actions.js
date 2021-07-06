@@ -42,7 +42,7 @@ export const getFullOfferInformation = (offerId) => (dispatch, _getState, api) =
   ])
     .then((data) => {
       const [detailedOfferData, nearbyOffersData, reviewsData] = data;
-      dispatch(ActionCreator.loadDetailedData(
+      dispatch(ActionCreator.loadFullOfferInformation(
         adaptOfferToClient(detailedOfferData.data),
         nearbyOffersData.data.map((offer) => adaptOfferToClient(offer)),
         reviewsData.data.map((review) => adaptReviewToClient(review)),

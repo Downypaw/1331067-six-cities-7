@@ -6,11 +6,8 @@ const initialState = {
   offers: [],
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   isOffersLoaded: false,
-  detailedOffer: {},
-  nearbyOffers: [],
-  reviews: [],
-  detailedData: {},
-  isDetailedDataLoaded: false,
+  fullOfferInformation: {},
+  isFullOfferInformationLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -52,20 +49,20 @@ const reducer = (state = initialState, action) => {
         ],
       };
     }
-    case ActionType.LOAD_DETAILED_DATA:
+    case ActionType.LOAD_FULL_OFFER_INFORMATION:
       return {
         ...state,
-        detailedData: {
+        fullOfferInformation: {
           detailedOffer: action.payload.detailedOfferData,
           nearbyOffers: action.payload.nearbyOffersData,
           reviews: action.payload.reviewsData,
         },
-        isDetailedDataLoaded: true,
+        isFullOfferInformationLoaded: true,
       };
     case ActionType.UPDATE_REVIEWS:
       return {
         ...state,
-        detailedData: {
+        fullOfferInformation: {
           ...state.detailedData,
           reviews: action.payload,
         },

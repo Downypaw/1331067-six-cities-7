@@ -5,7 +5,7 @@ export const ActionType = {
   LOGOUT: 'user/logout',
   REDIRECT_TO_ROUTE: '/redirectToRoute',
   UPDATE_OFFER: '/updateOffer',
-  LOAD_DETAILED_DATA: 'data/loadDetailedData',
+  LOAD_FULL_OFFER_INFORMATION: 'data/loadFullOfferInformation',
   UPDATE_REVIEWS: 'comments/updateReviews',
 };
 
@@ -36,8 +36,8 @@ export const ActionCreator = {
     type: ActionType.UPDATE_OFFER,
     payload: offer,
   }),
-  loadDetailedData: (detailedOfferData, nearbyOffersData, reviewsData) => ({
-    type: ActionType.LOAD_DETAILED_DATA,
+  loadFullOfferInformation: (detailedOfferData, nearbyOffersData, reviewsData) => ({
+    type: ActionType.LOAD_FULL_OFFER_INFORMATION,
     payload: {detailedOfferData, nearbyOffersData, reviewsData},
   }),
   updateReviews: (reviews) => ({

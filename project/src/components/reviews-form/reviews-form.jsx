@@ -120,7 +120,7 @@ ReviewsForm.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  offerId: state.detailedData.detailedOffer.id,
+  offerId: state.fullOfferInformation.detailedOffer.id,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -27,7 +27,7 @@ const store = createStore(
 store.dispatch(checkAuth());
 store.dispatch(fetchOffers());
 
-const getDetailedData = (offerId) => {
+const setFullOfferInformation = (offerId) => {
   store.dispatch(getFullOfferInformation(offerId));
 };
 
@@ -35,7 +35,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <App
-        getDetailedData={getDetailedData}
+        setFullOfferInformation={setFullOfferInformation}
       />
     </Provider>
   </React.StrictMode>,

@@ -14,10 +14,10 @@ import offerProp from '../props-validation/offer.prop';
 import reviewProp from '../props-validation/review.prop';
 
 export function Offer(props) {
-  const {detailedData, authorizationStatus} = props;
+  const {fullOfferInformation, authorizationStatus} = props;
   const history = useHistory();
 
-  const {detailedOffer, nearbyOffers, reviews} = detailedData;
+  const {detailedOffer, nearbyOffers, reviews} = fullOfferInformation;
 
   const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, goods, host, description} = detailedOffer;
 
@@ -142,7 +142,7 @@ export function Offer(props) {
 }
 
 Offer.propTypes = {
-  detailedData: PropTypes.shape({
+  fullOfferInformation: PropTypes.shape({
     detailedOffer: offerProp,
     nearbyOffers: PropTypes.arrayOf(offerProp).isRequired,
     reviews: PropTypes.arrayOf(reviewProp).isRequired,
@@ -151,7 +151,7 @@ Offer.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  detailedData: state.detailedData,
+  fullOfferInformation: state.fullOfferInformation,
   authorizationStatus: state.authorizationStatus,
 });
 
