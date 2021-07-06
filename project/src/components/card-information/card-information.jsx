@@ -27,13 +27,9 @@ export function CardInformation(props) {
           <span className="place-card__price-text">&#47;&nbsp;night</span>
         </div>
         <button
-          className={
-            `place-card__bookmark-button
-            ${authorizationStatus === AuthorizationStatus.AUTH && isFavorite
-              ? 'place-card__bookmark-button--active'
-              : ''
-            } button`
-          }
+          className={`place-card__bookmark-button
+            ${authorizationStatus === AuthorizationStatus.AUTH && isFavorite ? 'place-card__bookmark-button--active' : ''}
+          button`}
           onClick={authorizationStatus === AuthorizationStatus.AUTH
             ? handleBookmarkClick
             : () => history.push(AppRoute.SIGN_IN)}

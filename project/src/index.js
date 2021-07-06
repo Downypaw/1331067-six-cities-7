@@ -6,7 +6,6 @@ import {createAPI} from './services/api';
 import {Provider} from 'react-redux';
 import App from './components/app/app';
 import {composeWithDevTools} from 'redux-devtools-extension';
-import reviews from './mocks/reviews';
 import {reducer} from './store/reducer';
 import {ActionCreator} from './store/action';
 import {checkAuth, fetchOffers, getFullOfferInformation} from './store/api-actions';
@@ -30,7 +29,7 @@ store.dispatch(fetchOffers());
 
 const getDetailedData = (offerId) => {
   store.dispatch(getFullOfferInformation(offerId));
-}
+};
 
 ReactDOM.render(
   <React.StrictMode>

@@ -67,11 +67,11 @@ export const adaptReviewToClient = (review) => {
         {},
         review.user,
         {
-          avatarUrl: review.user.["avatar_url"],
-          isPro: review.user.["is_pro"],
+          avatarUrl: review.user.['avatar_url'],
+          isPro: review.user.['is_pro'],
         },
-      )
-    }
+      ),
+    },
   );
 
   delete adaptedReview.user.['avatar_url'];
@@ -89,11 +89,11 @@ export const adaptReviewToServer = (review) => {
         {},
         review.user,
         {
-          "avatar_url": review.user.avatarUrl,
-          "is_pro": review.user.isPro,
+          'avatar_url': review.user.avatarUrl,
+          'is_pro': review.user.isPro,
         },
-      )
-    }
+      ),
+    },
   );
 
   delete adaptedReview.user.avatarUrl;

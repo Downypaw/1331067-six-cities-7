@@ -38,14 +38,21 @@ export const getFullOfferInformation = (offerId) => (dispatch, _getState, api) =
   Promise.all([
     api.get(`${APIRoute.OFFERS}/${offerId}`),
     api.get(`${APIRoute.OFFERS}/${offerId}/nearby`),
-    api.get(`${APIRoute.REVIEWS}/${offerId}`)
+    api.get(`${APIRoute.REVIEWS}/${offerId}`),
   ])
-  .then((data) => {
-    const [detailedOfferData, nearbyOffersData, reviewsData] = data;
-    dispatch(ActionCreator.loadDetailedData(
-      adaptOfferToClient(detailedOfferData.data),
-      nearbyOffersData.data.map((offer) => adaptOfferToClient(offer)),
-      reviewsData.data.map((review) => adaptReviewToClient(review))
-    ));
-  })
+    .then((data) => {
+      const [detailedOfferData, nearbyOffersData, reviewsData] = data;
+      dispatch(ActionCreator.loadDetailedData(
+        adaptOfferToClient(detailedOfferData.data),
+        nearbyOffersData.data.map((offer) => adaptOfferToClient(offer)),
+        reviewsData.data.map((review) => adaptReviewToClient(review)),
+      ));
+    })
+);
+
+export const postComment = (offerId, {comment, rating}) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.REVIEWS}/${offerId}`, {comment, rating})
+    .then(({data}) => {
+      dispatch(ActionCreator.updateReviews(data.map((review) => adaptReviewToClient(review))));
+    })
 );

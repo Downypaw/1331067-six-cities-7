@@ -1,15 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {useHistory, Link} from 'react-router-dom';
-import {ActionCreator} from '../../store/action';
+import {Link} from 'react-router-dom';
 import {logout} from '../../store/api-actions';
 import {AppRoute} from '../../const';
 
 export function AuthorizedNavigation(props) {
   const {onLogoutButtonClick} = props;
-
-  const history = useHistory();
 
   return (
     <ul className="header__nav-list">

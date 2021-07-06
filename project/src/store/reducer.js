@@ -62,6 +62,14 @@ const reducer = (state = initialState, action) => {
         },
         isDetailedDataLoaded: true,
       };
+    case ActionType.UPDATE_REVIEWS:
+      return {
+        ...state,
+        detailedData: {
+          ...state.detailedData,
+          reviews: action.payload,
+        },
+      };
     default:
       return state;
   }

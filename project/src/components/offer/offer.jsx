@@ -4,18 +4,19 @@ import {connect} from 'react-redux';
 import {nanoid} from 'nanoid';
 import PropTypes from 'prop-types';
 import {AppRoute} from '../../const';
-import Logo from '../logo/logo';
 import ReviewsList from '../reviews-list/reviews-list';
 import ReviewsForm from '../reviews-form/reviews-form';
 import NearPlaceCard from '../near-place-card/near-place-card';
 import Map from '../map/map';
 import LoadingScreen from '../loading-screen/loading-screen';
-import {MapType, MAX_IMAGES_COUNT} from '../../const';
+import Header from '../header/header';
+import {MapType, MAX_IMAGES_COUNT, AuthorizationStatus} from '../../const';
 import offerProp from '../props-validation/offer.prop';
 import reviewProp from '../props-validation/review.prop';
 
 export function Offer(props) {
-  const {detailedData, isDetailedDataLoaded} = props;
+  const {detailedData, isDetailedDataLoaded, authorizationStatus} = props;
+  const history = useHistory();
 
   if (!isDetailedDataLoaded) {
     return (
@@ -31,8 +32,6 @@ export function Offer(props) {
     ? MAX_IMAGES_COUNT
     : images.length;
 
-  const history = useHistory();
-
   const cityLocation = detailedOffer.city.location;
   const points = [detailedOffer, ...nearbyOffers].map((item) => ({
     offerId: item.id,
@@ -42,29 +41,7 @@ export function Offer(props) {
 
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <Logo />
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="page__main page__main--property">
         <section className="property">
@@ -146,11 +123,14 @@ export function Offer(props) {
                   </p>
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ReviewsList reviews={reviews}/>
-                <ReviewsForm />
-              </section>
+              {
+                authorizationStatus === AuthorizationStatus.AUTH &&
+                <section className="property__reviews reviews">
+                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                  <ReviewsList reviews={reviews}/>
+                  <ReviewsForm />
+                </section>
+              }
             </div>
           </div>
           <Map type={MapType.OFFER_PAGE} cityLocation={cityLocation} points={points} selectedPoint={detailedOffer.id}/>
@@ -168,15 +148,20 @@ export function Offer(props) {
   );
 }
 
-// Offer.propTypes = {
-//   detailedOffer: offerProp,
-//   nearbyOffers: PropTypes.arrayOf(offerProp).isRequired,
-//   reviews: PropTypes.arrayOf(reviewProp).isRequired,
-// };
+Offer.propTypes = {
+  detailedData: PropTypes.shape({
+    detailedOffer: offerProp,
+    nearbyOffers: PropTypes.arrayOf(offerProp).isRequired,
+    reviews: PropTypes.arrayOf(reviewProp).isRequired,
+  }).isRequired,
+  isDetailedDataLoaded: PropTypes.bool.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   detailedData: state.detailedData,
   isDetailedDataLoaded: state.isDetailedDataLoaded,
+  authorizationStatus: state.authorizationStatus,
 });
 
 export default connect(mapStateToProps)(Offer);

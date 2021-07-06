@@ -6,6 +6,7 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: '/redirectToRoute',
   UPDATE_OFFER: '/updateOffer',
   LOAD_DETAILED_DATA: 'data/loadDetailedData',
+  UPDATE_REVIEWS: 'comments/updateReviews',
 };
 
 export const ActionCreator = {
@@ -38,5 +39,9 @@ export const ActionCreator = {
   loadDetailedData: (detailedOfferData, nearbyOffersData, reviewsData) => ({
     type: ActionType.LOAD_DETAILED_DATA,
     payload: {detailedOfferData, nearbyOffersData, reviewsData},
+  }),
+  updateReviews: (reviews) => ({
+    type: ActionType.UPDATE_REVIEWS,
+    payload: reviews,
   }),
 };

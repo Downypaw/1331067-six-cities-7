@@ -11,7 +11,6 @@ import SignInScreen from '../sign-in/sign-in';
 import PrivateRoute from '../private-route/private-route';
 import LoadingScreen from '../loading-screen/loading-screen';
 import offerProp from '../props-validation/offer.prop';
-import reviewProp from '../props-validation/review.prop';
 import {AuthorizationStatus} from '../../const';
 import browserHistory from '../../browser-history';
 
@@ -40,12 +39,12 @@ export function App(props) {
         </PrivateRoute>
         <Route exact path={AppRoute.OFFER} render={(routeProps) => {
           const offerId = parseInt(routeProps.match.params.id, 10);
-            if (offers.some((offer) => offer.id === offerId)) {
-              getDetailedData(offerId);
-              return <OfferScreen/>
-            } else {
-              return <NotFoundScreen />
-            }
+          if (offers.some((offer) => offer.id === offerId)) {
+            getDetailedData(offerId);
+            return <OfferScreen/>;
+          } else {
+            return <NotFoundScreen />;
+          }
         }}
         >
         </Route>
@@ -64,6 +63,7 @@ App.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   isOffersLoaded: PropTypes.bool.isRequired,
+  getDetailedData: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
