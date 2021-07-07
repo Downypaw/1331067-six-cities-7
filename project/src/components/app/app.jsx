@@ -11,14 +11,13 @@ import SignInScreen from '../sign-in/sign-in';
 import PrivateRoute from '../private-route/private-route';
 import LoadingScreen from '../loading-screen/loading-screen';
 import offerProp from '../props-validation/offer.prop';
-import reviewProp from '../props-validation/review.prop';
 import {AuthorizationStatus} from '../../const';
 import browserHistory from '../../browser-history';
 
 export function App(props) {
-  const {offers, reviews, authorizationStatus, isDataLoaded} = props;
+  const {offers, setFullOfferInformation, authorizationStatus, isOffersLoaded, isFullOfferInformationLoaded} = props;
 
-  if (authorizationStatus === AuthorizationStatus.UNKNOWN || !isDataLoaded) {
+  if (authorizationStatus === AuthorizationStatus.UNKNOWN || !isOffersLoaded) {
     return (
       <LoadingScreen />
     );
@@ -40,15 +39,12 @@ export function App(props) {
         </PrivateRoute>
         <Route exact path={AppRoute.OFFER} render={(routeProps) => {
           const offerId = parseInt(routeProps.match.params.id, 10);
-          const currentOffer = offers.find((offer) => offer.id === offerId);
-          const otherOffers = offers.filter((offer) => offer.city.name === currentOffer.city.name && offer.id !== currentOffer.id);
-          return (
-            <OfferScreen
-              offer={currentOffer}
-              otherOffers={otherOffers}
-              reviews={reviews}
-            />
-          );
+          if (offers.some((offer) => offer.id === offerId)) {
+            setFullOfferInformation(offerId);
+            return isFullOfferInformationLoaded ? <OfferScreen /> : <LoadingScreen />;
+          } else {
+            return <NotFoundScreen />;
+          }
         }}
         >
         </Route>
@@ -65,15 +61,17 @@ export function App(props) {
 
 App.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
-  reviews: PropTypes.arrayOf(reviewProp).isRequired,
   authorizationStatus: PropTypes.string.isRequired,
-  isDataLoaded: PropTypes.bool.isRequired,
+  isOffersLoaded: PropTypes.bool.isRequired,
+  isFullOfferInformationLoaded: PropTypes.bool.isRequired,
+  setFullOfferInformation: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   offers: state.offers,
   authorizationStatus: state.authorizationStatus,
-  isDataLoaded: state.isDataLoaded,
+  isOffersLoaded: state.isOffersLoaded,
+  isFullOfferInformationLoaded: state.isFullOfferInformationLoaded,
 });
 
 export default connect(mapStateToProps, null)(App);

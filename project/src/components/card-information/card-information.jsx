@@ -2,7 +2,7 @@ import React from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {toggleFavorite, getOffer} from '../../store/api-actions';
+import {toggleFavorite} from '../../store/api-actions';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import offerProp from '../props-validation/offer.prop';
 
@@ -27,7 +27,9 @@ export function CardInformation(props) {
           <span className="place-card__price-text">&#47;&nbsp;night</span>
         </div>
         <button
-          className={`place-card__bookmark-button ${isFavorite ? 'place-card__bookmark-button--active': ''} button`}
+          className={`place-card__bookmark-button
+            ${authorizationStatus === AuthorizationStatus.AUTH && isFavorite ? 'place-card__bookmark-button--active' : ''}
+          button`}
           onClick={authorizationStatus === AuthorizationStatus.AUTH
             ? handleBookmarkClick
             : () => history.push(AppRoute.SIGN_IN)}
@@ -66,7 +68,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onBookmarkClick(offerId, status) {
     dispatch(toggleFavorite(offerId, status));
-    dispatch(getOffer(offerId));
   },
 });
 

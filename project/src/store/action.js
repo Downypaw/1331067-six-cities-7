@@ -1,11 +1,12 @@
 export const ActionType = {
   CHANGE_CITY: '/cityChange',
-  GET_OFFERS: '/getOffers',
   LOAD_OFFERS: 'data/loadOffers',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
   REDIRECT_TO_ROUTE: '/redirectToRoute',
   UPDATE_OFFER: '/updateOffer',
+  LOAD_FULL_OFFER_INFORMATION: 'data/loadFullOfferInformation',
+  UPDATE_REVIEWS: 'comments/updateReviews',
 };
 
 export const ActionCreator = {
@@ -34,5 +35,13 @@ export const ActionCreator = {
   updateOffer: (offer) => ({
     type: ActionType.UPDATE_OFFER,
     payload: offer,
+  }),
+  loadFullOfferInformation: (detailedOfferData, nearbyOffersData, reviewsData) => ({
+    type: ActionType.LOAD_FULL_OFFER_INFORMATION,
+    payload: {detailedOfferData, nearbyOffersData, reviewsData},
+  }),
+  updateReviews: (reviews) => ({
+    type: ActionType.UPDATE_REVIEWS,
+    payload: reviews,
   }),
 };

@@ -1,24 +1,32 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
+import {connect} from 'react-redux';
 import {nanoid} from 'nanoid';
 import PropTypes from 'prop-types';
 import {AppRoute} from '../../const';
-import Logo from '../logo/logo';
 import ReviewsList from '../reviews-list/reviews-list';
 import ReviewsForm from '../reviews-form/reviews-form';
 import NearPlaceCard from '../near-place-card/near-place-card';
 import Map from '../map/map';
-import {MapType} from '../../const';
+import Header from '../header/header';
+import {MapType, MAX_IMAGES_COUNT, AuthorizationStatus} from '../../const';
 import offerProp from '../props-validation/offer.prop';
 import reviewProp from '../props-validation/review.prop';
 
-export default function Offer(props) {
-  const {offer, reviews, otherOffers} = props;
-  const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, goods, host, description} = offer;
+export function Offer(props) {
+  const {fullOfferInformation, authorizationStatus} = props;
   const history = useHistory();
 
-  const cityLocation = offer.city.location;
-  const points = [offer, ...otherOffers].map((item) => ({
+  const {detailedOffer, nearbyOffers, reviews} = fullOfferInformation;
+
+  const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, goods, host, description} = detailedOffer;
+
+  const imagesForGalleryCount = images.length >= MAX_IMAGES_COUNT
+    ? MAX_IMAGES_COUNT
+    : images.length;
+
+  const cityLocation = detailedOffer.city.location;
+  const points = [detailedOffer, ...nearbyOffers].map((item) => ({
     offerId: item.id,
     offerCords: [item.location.latitude, item.location.longitude],
     zoom: item.location.zoom,
@@ -26,35 +34,13 @@ export default function Offer(props) {
 
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <Logo />
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((image, index) => (
+              {images.slice(0, imagesForGalleryCount).map((image, index) => (
                 <div className="property__image-wrapper" key={nanoid()}>
                   <img className="property__image" src={image} alt="Photo studio"/>
                 </div>
@@ -130,20 +116,23 @@ export default function Offer(props) {
                   </p>
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ReviewsList reviews={reviews}/>
-                <ReviewsForm />
-              </section>
+              {
+                authorizationStatus === AuthorizationStatus.AUTH &&
+                <section className="property__reviews reviews">
+                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                  <ReviewsList reviews={reviews}/>
+                  <ReviewsForm />
+                </section>
+              }
             </div>
           </div>
-          <Map type={MapType.OFFER_PAGE} cityLocation={cityLocation} points={points} selectedPoint={offer.id}/>
+          <Map type={MapType.OFFER_PAGE} cityLocation={cityLocation} points={points} selectedPoint={detailedOffer.id}/>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {otherOffers.map((otherOffer) => <NearPlaceCard key={otherOffer.id} offer={otherOffer}/>)}
+              {nearbyOffers.map((nearbyOffer) => <NearPlaceCard key={nearbyOffer.id} offer={nearbyOffer}/>)}
             </div>
           </section>
         </div>
@@ -153,7 +142,17 @@ export default function Offer(props) {
 }
 
 Offer.propTypes = {
-  offer: offerProp,
-  otherOffers: PropTypes.arrayOf(offerProp).isRequired,
-  reviews: PropTypes.arrayOf(reviewProp).isRequired,
+  fullOfferInformation: PropTypes.shape({
+    detailedOffer: offerProp,
+    nearbyOffers: PropTypes.arrayOf(offerProp).isRequired,
+    reviews: PropTypes.arrayOf(reviewProp).isRequired,
+  }).isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  fullOfferInformation: state.fullOfferInformation,
+  authorizationStatus: state.authorizationStatus,
+});
+
+export default connect(mapStateToProps)(Offer);

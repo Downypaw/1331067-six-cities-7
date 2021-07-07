@@ -57,3 +57,47 @@ export const adaptOfferToServer = (offer) => {
 
   return adaptedOffer;
 };
+
+export const adaptReviewToClient = (review) => {
+  const adaptedReview = Object.assign(
+    {},
+    review,
+    {
+      user: Object.assign(
+        {},
+        review.user,
+        {
+          avatarUrl: review.user.['avatar_url'],
+          isPro: review.user.['is_pro'],
+        },
+      ),
+    },
+  );
+
+  delete adaptedReview.user.['avatar_url'];
+  delete adaptedReview.user.['is_pro'];
+
+  return adaptedReview;
+};
+
+export const adaptReviewToServer = (review) => {
+  const adaptedReview = Object.assign(
+    {},
+    review,
+    {
+      user: Object.assign(
+        {},
+        review.user,
+        {
+          'avatar_url': review.user.avatarUrl,
+          'is_pro': review.user.isPro,
+        },
+      ),
+    },
+  );
+
+  delete adaptedReview.user.avatarUrl;
+  delete adaptedReview.user.isPro;
+
+  return adaptedReview;
+};

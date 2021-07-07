@@ -1,17 +1,35 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {useState} from 'react';
+import {postComment} from '../../store/api-actions';
 
-export default function ReviewsForm() {
+export function ReviewsForm(props) {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
+
+  const {onSubmit, offerId} = props;
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    onSubmit(
+      offerId,
+      {comment, rating},
+    );
+
+    setRating(0);
+    setComment('');
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" onSubmit={handleSubmit} action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         <input
           className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio"
           onChange={(evt) => {
-            setRating(evt.target.value);
+            setRating(Number(evt.target.value));
           }}
           checked={rating === 5}
         />
@@ -24,7 +42,7 @@ export default function ReviewsForm() {
         <input
           className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio"
           onChange={(evt) => {
-            setRating(evt.target.value);
+            setRating(Number(evt.target.value));
           }}
           checked={rating === 4}
         />
@@ -37,7 +55,7 @@ export default function ReviewsForm() {
         <input
           className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio"
           onChange={(evt) => {
-            setRating(evt.target.value);
+            setRating(Number(evt.target.value));
           }}
           checked={rating === 3}
         />
@@ -50,7 +68,7 @@ export default function ReviewsForm() {
         <input
           className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio"
           onChange={(evt) => {
-            setRating(evt.target.value);
+            setRating(Number(evt.target.value));
           }}
           checked={rating === 2}
         />
@@ -63,7 +81,7 @@ export default function ReviewsForm() {
         <input
           className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio"
           onChange={(evt) => {
-            setRating(evt.target.value);
+            setRating(Number(evt.target.value));
           }}
           checked={rating === 1}
         />
@@ -84,8 +102,31 @@ export default function ReviewsForm() {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
+        <button
+          className="reviews__submit form__submit button"
+          type="submit"
+          disabled={comment.length < 50 || comment.length > 300 || rating === 0}
+        >
+          Submit
+        </button>
       </div>
     </form>
   );
 }
+
+ReviewsForm.propTypes = {
+  offerId: PropTypes.number.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  offerId: state.fullOfferInformation.detailedOffer.id,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit(offerId, commentData) {
+    dispatch(postComment(offerId, commentData));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewsForm);
