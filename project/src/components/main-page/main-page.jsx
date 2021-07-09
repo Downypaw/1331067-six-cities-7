@@ -7,6 +7,7 @@ import EmptyOffersList from '../empty-offers-list/empty-offers-list';
 import Header from '../header/header';
 import CitiesList from '../cities-list/cities-list';
 import offerProp from '../props-validation/offer.prop';
+import {getActiveCity} from '../../store/app-interaction/selectors';
 
 export function MainPage(props) {
   const {offers, activeCity, onCityChange} = props;
@@ -34,8 +35,8 @@ MainPage.propTypes = {
   onCityChange: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({INTERACTION}) => ({
-  activeCity: INTERACTION.activeCity,
+const mapStateToProps = (state) => ({
+  activeCity: getActiveCity(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

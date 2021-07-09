@@ -13,6 +13,8 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import offerProp from '../props-validation/offer.prop';
 import {AuthorizationStatus} from '../../const';
 import browserHistory from '../../browser-history';
+import {getOffers, getLoadedOffersStatus, getLoadedFullInformationStatus} from '../../store/app-data/selectors';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
 export function App(props) {
   const {offers, setFullOfferInformation, authorizationStatus, isOffersLoaded, isFullOfferInformationLoaded} = props;
@@ -67,11 +69,11 @@ App.propTypes = {
   setFullOfferInformation: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({DATA, USER}) => ({
-  offers: DATA.offers,
-  authorizationStatus: USER.authorizationStatus,
-  isOffersLoaded: DATA.isOffersLoaded,
-  isFullOfferInformationLoaded: DATA.isFullOfferInformationLoaded,
+const mapStateToProps = (state) => ({
+  offers: getOffers(state),
+  authorizationStatus: getAuthorizationStatus(state),
+  isOffersLoaded: getLoadedOffersStatus(state),
+  isFullOfferInformationLoaded: getLoadedFullInformationStatus(state),
 });
 
 export default connect(mapStateToProps, null)(App);

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {useState} from 'react';
 import {postComment} from '../../store/api-actions';
+import {getFullOfferInformation} from '../../store/app-data/selectors';
 
 export function ReviewsForm(props) {
   const [rating, setRating] = useState(0);
@@ -119,8 +120,8 @@ ReviewsForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({DATA}) => ({
-  offerId: DATA.fullOfferInformation.detailedOffer.id,
+const mapStateToProps = (state) => ({
+  offerId: getFullOfferInformation(state).detailedOffer.id,
 });
 
 const mapDispatchToProps = (dispatch) => ({

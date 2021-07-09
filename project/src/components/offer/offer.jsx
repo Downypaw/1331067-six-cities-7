@@ -13,6 +13,8 @@ import FavoriteButton from '../favorite-button/favorite-button';
 import {MapType, MAX_IMAGES_COUNT, AuthorizationStatus, FavoriteButtonType} from '../../const';
 import offerProp from '../props-validation/offer.prop';
 import reviewProp from '../props-validation/review.prop';
+import {getFullOfferInformation} from '../../store/app-data/selectors';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
 export function Offer(props) {
   const {fullOfferInformation, authorizationStatus} = props;
@@ -146,9 +148,9 @@ Offer.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({DATA, USER}) => ({
-  fullOfferInformation: DATA.fullOfferInformation,
-  authorizationStatus: USER.authorizationStatus,
+const mapStateToProps = (state) => ({
+  fullOfferInformation: getFullOfferInformation(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 export default connect(mapStateToProps)(Offer);

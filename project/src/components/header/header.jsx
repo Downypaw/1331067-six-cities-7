@@ -5,6 +5,7 @@ import {AuthorizationStatus} from '../../const';
 import Logo from '../logo/logo';
 import UnauthorizedNavigation from '../unauthorized-navigation/unauthorized-navigation';
 import AuthorizedNavigation from '../authorized-navigation/authorized-navigation';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
 export function Header({authorizationStatus}) {
   return (
@@ -29,8 +30,8 @@ Header.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({USER}) => ({
-  authorizationStatus: USER.authorizationStatus,
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 export default connect(mapStateToProps)(Header);
