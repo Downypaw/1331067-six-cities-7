@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/action';
+import {changeCity} from '../../store/action';
 import OffersList from '../offers-list/offers-list';
 import EmptyOffersList from '../empty-offers-list/empty-offers-list';
 import Header from '../header/header';
@@ -40,7 +40,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onCityChange(activeCity) {
-    dispatch(ActionCreator.changeCity(activeCity));
+    dispatch(changeCity(activeCity));
   },
 });
 

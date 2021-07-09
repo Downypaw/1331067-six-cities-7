@@ -1,15 +1,15 @@
-import {ActionCreator} from './action';
+import {loadOffers, requireAuthorization, redirectToRoute, makeLogout, updateOffer, loadFullOfferInformation, updateReviews} from './action';
 import {AuthorizationStatus, AppRoute, APIRoute} from '../const';
 import {adaptOfferToClient, adaptReviewToClient} from '../util/adapter';
 
 export const fetchOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS)
-    .then(({data}) => dispatch(ActionCreator.loadOffers(data.map((offer) => adaptOfferToClient(offer)))))
+    .then(({data}) => dispatch(loadOffers(data.map((offer) => adaptOfferToClient(offer)))))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => {})
 );
 
@@ -19,8 +19,8 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
       localStorage.setItem('token', data.token);
       localStorage.setItem('login', data.email);
     })
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.INDEX)))
+    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(redirectToRoute(AppRoute.INDEX)))
 );
 
 export const logout = () => (dispatch, _getState, api) => (
@@ -29,12 +29,12 @@ export const logout = () => (dispatch, _getState, api) => (
       localStorage.removeItem('token');
       localStorage.removeItem('login')
     })
-    .then(() => dispatch(ActionCreator.logout()))
+    .then(() => dispatch(logout()))
 );
 
 export const toggleFavorite = ({offerId, status}) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.FAVORITE}/${offerId}/${status}`)
-    .then(({data}) => dispatch(ActionCreator.updateOffer(adaptOfferToClient(data))))
+    .then(({data}) => dispatch(updateOffer(adaptOfferToClient(data))))
 );
 
 export const getFullOfferInformation = (offerId) => (dispatch, _getState, api) => (
@@ -45,7 +45,7 @@ export const getFullOfferInformation = (offerId) => (dispatch, _getState, api) =
   ])
     .then((data) => {
       const [detailedOfferData, nearbyOffersData, reviewsData] = data;
-      dispatch(ActionCreator.loadFullOfferInformation(
+      dispatch(loadFullOfferInformation(
         adaptOfferToClient(detailedOfferData.data),
         nearbyOffersData.data.map((offer) => adaptOfferToClient(offer)),
         reviewsData.data.map((review) => adaptReviewToClient(review)),
@@ -56,6 +56,6 @@ export const getFullOfferInformation = (offerId) => (dispatch, _getState, api) =
 export const postComment = (offerId, {comment, rating}) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.REVIEWS}/${offerId}`, {comment, rating})
     .then(({data}) => {
-      dispatch(ActionCreator.updateReviews(data.map((review) => adaptReviewToClient(review))));
+      dispatch(updateReviews(data.map((review) => adaptReviewToClient(review))));
     })
 );
