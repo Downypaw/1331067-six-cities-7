@@ -1,4 +1,6 @@
 import {ActionType} from '../action';
+import {createReducer} from '@reduxjs/toolkit';
+import {getOffers, loadOffers, updateOffer, loadFullOfferInformation, updateReviews} from '../action';
 
 const initialState = {
   offers: [],
@@ -7,52 +9,34 @@ const initialState = {
   isFullOfferInformationLoaded: false,
 };
 
-const appData = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionType.FILTER_OFFERS:
-      return {
-        ...state,
-        offers: action.payload,
-      };
-    case ActionType.LOAD_OFFERS:
-      return {
-        ...state,
-        offers: action.payload,
-        isOffersLoaded: true,
-      };
-    case ActionType.UPDATE_OFFER: {
+const appData = createReducer(initialState, (builder) => {
+  builder
+    .addCase(loadOffers, (state, action) => {
+      state.offers = action.payload;
+      state.isOffersLoaded = true;
+    })
+    .addCase(updateOffer, (state, action) => {
       const index = state.offers.findIndex((offer) => offer.id === action.payload.id);
-      return {
-        ...state,
-        offers: [
-          ...state.offers.slice(0, index),
-          action.payload,
-          ...state.offers.slice(index + 1),
-        ],
+      state.offers = [
+        ...state.offers.slice(0, index),
+        action.payload,
+        ...state.offers.slice(index + 1),
+      ];
+    })
+    .addCase(loadFullOfferInformation, (state, action) => {
+      state.fullOfferInformation = {
+        detailedOffer: action.payload.detailedOfferData,
+        nearbyOffers: action.payload.nearbyOffersData,
+        reviews: action.payload.reviewsData,
       };
-    }
-    case ActionType.LOAD_FULL_OFFER_INFORMATION:
-      return {
-        ...state,
-        fullOfferInformation: {
-          detailedOffer: action.payload.detailedOfferData,
-          nearbyOffers: action.payload.nearbyOffersData,
-          reviews: action.payload.reviewsData,
-        },
-        isFullOfferInformationLoaded: true,
+      state.isFullOfferInformationLoaded = true;
+    })
+    .addCase(updateReviews, (state, action) => {
+      state.fullOfferInformation = {
+        ...state.fullOfferInformation,
+        reviews: action.payload,
       };
-    case ActionType.UPDATE_REVIEWS:
-      return {
-        ...state,
-        fullOfferInformation: {
-          ...state.fullOfferInformation,
-          reviews: action.payload,
-        },
-      };
-    default:
-      return state;
-  }
-};
-
+    });
+});
 
 export {appData};

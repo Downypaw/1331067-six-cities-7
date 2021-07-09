@@ -15,8 +15,6 @@ export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => ({
   payload: city,
 }));
 
-export const getOffers = createAction(ActionType.FILTER_OFFERS);
-
 export const loadOffers = createAction(ActionType.LOAD_OFFERS, (offers) => ({
   payload: offers,
 }));
