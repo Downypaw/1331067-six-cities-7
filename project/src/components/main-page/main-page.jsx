@@ -34,8 +34,8 @@ MainPage.propTypes = {
   onCityChange: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  activeCity: state.activeCity,
+const mapStateToProps = ({INTERACTION}) => ({
+  activeCity: INTERACTION.activeCity,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -146,9 +146,9 @@ Offer.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  fullOfferInformation: state.fullOfferInformation,
-  authorizationStatus: state.authorizationStatus,
+const mapStateToProps = ({DATA, USER}) => ({
+  fullOfferInformation: DATA.fullOfferInformation,
+  authorizationStatus: USER.authorizationStatus,
 });
 
 export default connect(mapStateToProps)(Offer);

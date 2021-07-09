@@ -67,11 +67,11 @@ App.propTypes = {
   setFullOfferInformation: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  offers: state.offers,
-  authorizationStatus: state.authorizationStatus,
-  isOffersLoaded: state.isOffersLoaded,
-  isFullOfferInformationLoaded: state.isFullOfferInformationLoaded,
+const mapStateToProps = ({DATA, USER}) => ({
+  offers: DATA.offers,
+  authorizationStatus: USER.authorizationStatus,
+  isOffersLoaded: DATA.isOffersLoaded,
+  isFullOfferInformationLoaded: DATA.isFullOfferInformationLoaded,
 });
 
 export default connect(mapStateToProps, null)(App);

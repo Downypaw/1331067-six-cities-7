@@ -119,8 +119,8 @@ ReviewsForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  offerId: state.fullOfferInformation.detailedOffer.id,
+const mapStateToProps = ({DATA}) => ({
+  offerId: DATA.fullOfferInformation.detailedOffer.id,
 });
 
 const mapDispatchToProps = (dispatch) => ({

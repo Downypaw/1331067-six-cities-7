@@ -1,22 +1,14 @@
-import {ActionType} from './action';
-import {City, AuthorizationStatus} from '../const';
+import {ActionType} from '../action';
 
 const initialState = {
-  activeCity: City.PARIS,
   offers: [],
-  authorizationStatus: AuthorizationStatus.UNKNOWN,
   isOffersLoaded: false,
   fullOfferInformation: {},
   isFullOfferInformationLoaded: false,
 };
 
-const reducer = (state = initialState, action) => {
+const appData = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.CHANGE_CITY:
-      return {
-        ...state,
-        activeCity: action.payload,
-      };
     case ActionType.FILTER_OFFERS:
       return {
         ...state,
@@ -27,16 +19,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         offers: action.payload,
         isOffersLoaded: true,
-      };
-    case ActionType.REQUIRED_AUTHORIZATION:
-      return {
-        ...state,
-        authorizationStatus: action.payload,
-      };
-    case ActionType.LOGOUT:
-      return {
-        ...state,
-        authorizationStatus: AuthorizationStatus.NO_AUTH,
       };
     case ActionType.UPDATE_OFFER: {
       const index = state.offers.findIndex((offer) => offer.id === action.payload.id);
@@ -73,4 +55,4 @@ const reducer = (state = initialState, action) => {
 };
 
 
-export {reducer};
+export {appData};
