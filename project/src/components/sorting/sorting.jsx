@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {useState} from 'react';
 import {SortType} from '../../const';
 
-export default function Sorting(props) {
+function Sorting(props) {
   const [listState, setListState] = useState('');
   const {activeOption, onOptionChange} = props;
 
@@ -36,3 +36,7 @@ Sorting.propTypes = {
   activeOption: PropTypes.string.isRequired,
   onOptionChange: PropTypes.func.isRequired,
 };
+
+export default React.memo(Sorting, (prevProps, nextProps) => {
+    return prevProps.activeOption === nextProps.activeOption;
+});

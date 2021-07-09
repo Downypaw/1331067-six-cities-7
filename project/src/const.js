@@ -51,3 +51,19 @@ export const APIRoute = {
 };
 
 export const MAX_IMAGES_COUNT = 6;
+
+export const FavoriteButtonType = {
+  CARD: 'place-card',
+  OFFER: 'property',
+};
+
+export const FavoriteButtonSize = {
+  CARD: {
+    width: 18,
+    height: 19,
+  },
+  OFFER: {
+    width: 31,
+    height: 33,
+  },
+}

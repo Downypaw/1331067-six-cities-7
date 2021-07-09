@@ -63,7 +63,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         fullOfferInformation: {
-          ...state.detailedData,
+          ...state.fullOfferInformation,
           reviews: action.payload,
         },
       };

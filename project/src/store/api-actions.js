@@ -25,7 +25,10 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
 
 export const logout = () => (dispatch, _getState, api) => (
   api.delete(APIRoute.LOGOUT)
-    .then(() => localStorage.removeItem('token'))
+    .then(() => {
+      localStorage.removeItem('token');
+      localStorage.removeItem('login')
+    })
     .then(() => dispatch(ActionCreator.logout()))
 );
 
