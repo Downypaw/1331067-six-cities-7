@@ -1,4 +1,3 @@
-import {ActionType} from '../action';
 import {createReducer} from '@reduxjs/toolkit';
 import {requireAuthorization, makeLogout} from '../action';
 import {AuthorizationStatus} from '../../const';

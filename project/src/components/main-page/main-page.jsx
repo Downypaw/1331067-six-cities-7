@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {changeCity} from '../../store/action';
 import OffersList from '../offers-list/offers-list';
 import EmptyOffersList from '../empty-offers-list/empty-offers-list';
@@ -9,8 +9,17 @@ import CitiesList from '../cities-list/cities-list';
 import offerProp from '../props-validation/offer.prop';
 import {getActiveCity} from '../../store/app-interaction/selectors';
 
-export function MainPage(props) {
-  const {offers, activeCity, onCityChange} = props;
+export default function MainPage(props) {
+  const {offers} = props;
+
+  const activeCity = useSelector(getActiveCity);
+
+  const dispatch = useDispatch();
+
+  const onCityChange = (city) => {
+    dispatch(changeCity(city));
+  };
+
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
 
   return (
@@ -31,18 +40,4 @@ export function MainPage(props) {
 
 MainPage.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
-  activeCity: PropTypes.string.isRequired,
-  onCityChange: PropTypes.func.isRequired,
 };
-
-const mapStateToProps = (state) => ({
-  activeCity: getActiveCity(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onCityChange(activeCity) {
-    dispatch(changeCity(activeCity));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

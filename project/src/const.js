@@ -66,4 +66,4 @@ export const FavoriteButtonSize = {
     width: 31,
     height: 33,
   },
-}
+};

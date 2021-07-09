@@ -27,9 +27,9 @@ export const logout = () => (dispatch, _getState, api) => (
   api.delete(APIRoute.LOGOUT)
     .then(() => {
       localStorage.removeItem('token');
-      localStorage.removeItem('login')
+      localStorage.removeItem('login');
     })
-    .then(() => dispatch(logout()))
+    .then(() => dispatch(makeLogout()))
 );
 
 export const toggleFavorite = ({offerId, status}) => (dispatch, _getState, api) => (

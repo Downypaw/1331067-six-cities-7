@@ -1,6 +1,5 @@
-import {ActionType} from '../action';
 import {createReducer} from '@reduxjs/toolkit';
-import {getOffers, loadOffers, updateOffer, loadFullOfferInformation, updateReviews} from '../action';
+import {loadOffers, updateOffer, loadFullOfferInformation, updateReviews} from '../action';
 
 const initialState = {
   offers: [],

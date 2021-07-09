@@ -37,6 +37,4 @@ Sorting.propTypes = {
   onOptionChange: PropTypes.func.isRequired,
 };
 
-export default React.memo(Sorting, (prevProps, nextProps) => {
-    return prevProps.activeOption === nextProps.activeOption;
-});
+export default React.memo(Sorting, (prevProps, nextProps) => prevProps.activeOption === nextProps.activeOption);

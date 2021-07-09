@@ -1,12 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {logout} from '../../store/api-actions';
 import {AppRoute} from '../../const';
 
-export function AuthorizedNavigation(props) {
-  const {onLogoutButtonClick} = props;
+export default function AuthorizedNavigation() {
+  const dispatch = useDispatch();
+
+  const onLogoutButtonClick = () => {
+    dispatch(logout());
+  };
 
   return (
     <ul className="header__nav-list">
@@ -36,15 +39,3 @@ export function AuthorizedNavigation(props) {
     </ul>
   );
 }
-
-AuthorizedNavigation.propTypes = {
-  onLogoutButtonClick: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  onLogoutButtonClick() {
-    dispatch(logout());
-  },
-});
-
-export default connect(null, mapDispatchToProps)(AuthorizedNavigation);

@@ -1,8 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 import FavoriteButton from '../favorite-button/favorite-button';
-import {AppRoute, FavoriteButtonType} from '../../const';
+import {FavoriteButtonType} from '../../const';
 import offerProp from '../props-validation/offer.prop';
 
 export default function CardInformation(props) {

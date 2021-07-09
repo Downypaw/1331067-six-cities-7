@@ -1,21 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useHistory} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {AuthorizationStatus, FavoriteButtonType, FavoriteButtonSize} from '../../const';
+import {useSelector, useDispatch} from 'react-redux';
+import {AuthorizationStatus, FavoriteButtonType, FavoriteButtonSize, AppRoute} from '../../const';
 import {toggleFavorite} from '../../store/api-actions';
 import {getAuthorizationStatus} from '../../store/user/selectors';
 
-function FavoriteButton(props) {
-  const {id, isFavorite, pageType, onBookmarkClick, authorizationStatus} = props;
+export default function FavoriteButton(props) {
+  const {id, isFavorite, pageType} = props;
 
   const history = useHistory();
 
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+
+  const dispatch = useDispatch();
+
   const handleBookmarkClick = () => {
-    onBookmarkClick({
+    dispatch(toggleFavorite({
       offerId: id,
       status: Number(!isFavorite),
-    });
+    }));
   };
 
   let favoriteButtonSize;
@@ -48,20 +52,7 @@ function FavoriteButton(props) {
 }
 
 FavoriteButton.propTypes = {
+  id: PropTypes.number.isRequired,
   isFavorite: PropTypes.bool.isRequired,
   pageType: PropTypes.string.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-  onBookmarkClick: PropTypes.func.isRequired,
 };
-
-const mapStateToProps = (state) => ({
-  authorizationStatus: getAuthorizationStatus(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onBookmarkClick(offerId, status) {
-    dispatch(toggleFavorite(offerId, status));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(FavoriteButton);

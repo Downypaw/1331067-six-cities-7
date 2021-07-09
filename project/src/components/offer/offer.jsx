@@ -1,9 +1,5 @@
 import React from 'react';
-import {useHistory} from 'react-router-dom';
-import {connect} from 'react-redux';
 import {nanoid} from 'nanoid';
-import PropTypes from 'prop-types';
-import {AppRoute} from '../../const';
 import ReviewsList from '../reviews-list/reviews-list';
 import ReviewsForm from '../reviews-form/reviews-form';
 import NearPlaceCard from '../near-place-card/near-place-card';
@@ -11,14 +7,13 @@ import Map from '../map/map';
 import Header from '../header/header';
 import FavoriteButton from '../favorite-button/favorite-button';
 import {MapType, MAX_IMAGES_COUNT, AuthorizationStatus, FavoriteButtonType} from '../../const';
-import offerProp from '../props-validation/offer.prop';
-import reviewProp from '../props-validation/review.prop';
 import {getFullOfferInformation} from '../../store/app-data/selectors';
 import {getAuthorizationStatus} from '../../store/user/selectors';
+import {useSelector} from 'react-redux';
 
-export function Offer(props) {
-  const {fullOfferInformation, authorizationStatus} = props;
-  const history = useHistory();
+export default function Offer() {
+  const fullOfferInformation = useSelector(getFullOfferInformation);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   const {detailedOffer, nearbyOffers, reviews} = fullOfferInformation;
 
@@ -138,19 +133,3 @@ export function Offer(props) {
     </div>
   );
 }
-
-Offer.propTypes = {
-  fullOfferInformation: PropTypes.shape({
-    detailedOffer: offerProp,
-    nearbyOffers: PropTypes.arrayOf(offerProp).isRequired,
-    reviews: PropTypes.arrayOf(reviewProp).isRequired,
-  }).isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  fullOfferInformation: getFullOfferInformation(state),
-  authorizationStatus: getAuthorizationStatus(state),
-});
-
-export default connect(mapStateToProps)(Offer);
