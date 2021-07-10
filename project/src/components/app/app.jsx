@@ -12,15 +12,16 @@ import PrivateRoute from '../private-route/private-route';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {AuthorizationStatus} from '../../const';
 import browserHistory from '../../browser-history';
-import {getOffers, getLoadedOffersStatus, getLoadedFullInformationStatus} from '../../store/app-data/selectors';
+import {getOffers, getLoadedOffersStatus, getLoadedFullInformationStatus, getLoadedFavoriteOffersStatus} from '../../store/app-data/selectors';
 import {getAuthorizationStatus} from '../../store/user/selectors';
 
 export default function App(props) {
-  const {setFullOfferInformation} = props;
+  const {setFullOfferInformation, setFavoriteOffers} = props;
   const offers = useSelector(getOffers);
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const isOffersLoaded = useSelector(getLoadedOffersStatus);
   const isFullOfferInformationLoaded = useSelector(getLoadedFullInformationStatus);
+  const isFavoriteOffersLoaded = useSelector(getLoadedFavoriteOffersStatus);
 
   if (authorizationStatus === AuthorizationStatus.UNKNOWN || !isOffersLoaded) {
     return (
@@ -39,7 +40,10 @@ export default function App(props) {
         <PrivateRoute
           exact
           path={AppRoute.FAVORITES}
-          render={() => <FavoritesScreen offers={offers.filter((offer) => offer.isFavorite)}/>}
+          render={() => {
+            setFavoriteOffers();
+            return isFavoriteOffersLoaded ? <FavoritesScreen /> : <LoadingScreen />;
+          }}
         >
         </PrivateRoute>
         <Route exact path={AppRoute.OFFER} render={(routeProps) => {
@@ -66,4 +70,5 @@ export default function App(props) {
 
 App.propTypes = {
   setFullOfferInformation: PropTypes.func.isRequired,
+  setFavoriteOffers: PropTypes.func.isRequired,
 };

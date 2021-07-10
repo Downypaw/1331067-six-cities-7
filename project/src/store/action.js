@@ -9,6 +9,7 @@ export const ActionType = {
   UPDATE_OFFER: '/updateOffer',
   LOAD_FULL_OFFER_INFORMATION: 'data/loadFullOfferInformation',
   UPDATE_REVIEWS: 'comments/updateReviews',
+  LOAD_FAVORITE_OFFERS: 'favorites/loadFavoriteOffers',
 };
 
 export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => ({
@@ -39,4 +40,8 @@ export const loadFullOfferInformation = createAction(ActionType.LOAD_FULL_OFFER_
 
 export const updateReviews = createAction(ActionType.UPDATE_REVIEWS, (reviews) => ({
   payload: reviews,
+}));
+
+export const loadFavoriteOffers = createAction(ActionType.LOAD_FAVORITE_OFFERS, (favoriteOffers) => ({
+  payload: favoriteOffers,
 }));

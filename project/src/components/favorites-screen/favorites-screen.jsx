@@ -1,14 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import offerProp from '../props-validation/offer.prop';
+import {useSelector} from 'react-redux';
+import {getFavoriteOffers} from '../../store/app-data/selectors';
 import {City} from '../../const';
 import Header from '../header/header';
 import FavoriteItem from '../favorite-item/favorite-item';
 
-export default function FavoritesScreen(props) {
-  const {offers} = props;
+export default function FavoritesScreen() {
+  const favoriteOffers = useSelector(getFavoriteOffers);
 
-  const getOffersByCity = (city) => offers.filter((offer) => offer.city.name === city);
+  const getOffersByCity = (city) => favoriteOffers.filter((favoriteOffer) => favoriteOffer.city.name === city);
 
   return (
     <div className="page">
@@ -35,7 +35,3 @@ export default function FavoritesScreen(props) {
     </div>
   );
 }
-
-FavoritesScreen.propTypes = {
-  offers: PropTypes.arrayOf(offerProp).isRequired,
-};
