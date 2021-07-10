@@ -1,25 +1,23 @@
 import React from 'react';
-import {useHistory} from 'react-router-dom';
-import {connect} from 'react-redux';
 import {nanoid} from 'nanoid';
-import PropTypes from 'prop-types';
-import {AppRoute} from '../../const';
 import ReviewsList from '../reviews-list/reviews-list';
 import ReviewsForm from '../reviews-form/reviews-form';
 import NearPlaceCard from '../near-place-card/near-place-card';
 import Map from '../map/map';
 import Header from '../header/header';
-import {MapType, MAX_IMAGES_COUNT, AuthorizationStatus} from '../../const';
-import offerProp from '../props-validation/offer.prop';
-import reviewProp from '../props-validation/review.prop';
+import FavoriteButton from '../favorite-button/favorite-button';
+import {MapType, MAX_IMAGES_COUNT, AuthorizationStatus, FavoriteButtonType} from '../../const';
+import {getFullOfferInformation} from '../../store/app-data/selectors';
+import {getAuthorizationStatus} from '../../store/user/selectors';
+import {useSelector} from 'react-redux';
 
-export function Offer(props) {
-  const {fullOfferInformation, authorizationStatus} = props;
-  const history = useHistory();
+export default function Offer() {
+  const fullOfferInformation = useSelector(getFullOfferInformation);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   const {detailedOffer, nearbyOffers, reviews} = fullOfferInformation;
 
-  const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, goods, host, description} = detailedOffer;
+  const {id, images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, goods, host, description} = detailedOffer;
 
   const imagesForGalleryCount = images.length >= MAX_IMAGES_COUNT
     ? MAX_IMAGES_COUNT
@@ -57,12 +55,7 @@ export function Offer(props) {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className={`property__bookmark-button ${isFavorite ? 'property__bookmark-button--active': ''} button`} onClick={() => history.push(AppRoute.SIGN_IN)} type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <FavoriteButton id={id} isFavorite={isFavorite} pageType={FavoriteButtonType.OFFER} />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
@@ -140,19 +133,3 @@ export function Offer(props) {
     </div>
   );
 }
-
-Offer.propTypes = {
-  fullOfferInformation: PropTypes.shape({
-    detailedOffer: offerProp,
-    nearbyOffers: PropTypes.arrayOf(offerProp).isRequired,
-    reviews: PropTypes.arrayOf(reviewProp).isRequired,
-  }).isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  fullOfferInformation: state.fullOfferInformation,
-  authorizationStatus: state.authorizationStatus,
-});
-
-export default connect(mapStateToProps)(Offer);

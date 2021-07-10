@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {AppRoute} from '../../const';
 import MainPageScreen from '../main-page/main-page';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
@@ -10,12 +10,17 @@ import OfferScreen from '../offer/offer';
 import SignInScreen from '../sign-in/sign-in';
 import PrivateRoute from '../private-route/private-route';
 import LoadingScreen from '../loading-screen/loading-screen';
-import offerProp from '../props-validation/offer.prop';
 import {AuthorizationStatus} from '../../const';
 import browserHistory from '../../browser-history';
+import {getOffers, getLoadedOffersStatus, getLoadedFullInformationStatus} from '../../store/app-data/selectors';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
-export function App(props) {
-  const {offers, setFullOfferInformation, authorizationStatus, isOffersLoaded, isFullOfferInformationLoaded} = props;
+export default function App(props) {
+  const {setFullOfferInformation} = props;
+  const offers = useSelector(getOffers);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const isOffersLoaded = useSelector(getLoadedOffersStatus);
+  const isFullOfferInformationLoaded = useSelector(getLoadedFullInformationStatus);
 
   if (authorizationStatus === AuthorizationStatus.UNKNOWN || !isOffersLoaded) {
     return (
@@ -60,18 +65,5 @@ export function App(props) {
 }
 
 App.propTypes = {
-  offers: PropTypes.arrayOf(offerProp).isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-  isOffersLoaded: PropTypes.bool.isRequired,
-  isFullOfferInformationLoaded: PropTypes.bool.isRequired,
   setFullOfferInformation: PropTypes.func.isRequired,
 };
-
-const mapStateToProps = (state) => ({
-  offers: state.offers,
-  authorizationStatus: state.authorizationStatus,
-  isOffersLoaded: state.isOffersLoaded,
-  isFullOfferInformationLoaded: state.isFullOfferInformationLoaded,
-});
-
-export default connect(mapStateToProps, null)(App);

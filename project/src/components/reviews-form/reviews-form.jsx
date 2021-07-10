@@ -1,22 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
 import {useState} from 'react';
 import {postComment} from '../../store/api-actions';
+import {getFullOfferInformation} from '../../store/app-data/selectors';
+import {useSelector, useDispatch} from 'react-redux';
 
-export function ReviewsForm(props) {
+export default function ReviewsForm() {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
 
-  const {onSubmit, offerId} = props;
+  const offerId = useSelector(getFullOfferInformation).detailedOffer.id;
+
+  const dispatch = useDispatch();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    onSubmit(
-      offerId,
-      {comment, rating},
-    );
+    dispatch(postComment(offerId, {comment, rating}));
 
     setRating(0);
     setComment('');
@@ -113,20 +112,3 @@ export function ReviewsForm(props) {
     </form>
   );
 }
-
-ReviewsForm.propTypes = {
-  offerId: PropTypes.number.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  offerId: state.fullOfferInformation.detailedOffer.id,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(offerId, commentData) {
-    dispatch(postComment(offerId, commentData));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewsForm);

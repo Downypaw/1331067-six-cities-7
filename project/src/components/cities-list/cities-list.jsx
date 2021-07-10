@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {City} from '../../const';
 
-export default function CitiesList(props) {
+function CitiesList(props) {
   const {activeCity, onCityChange} = props;
 
   return(
@@ -29,3 +29,5 @@ CitiesList.propTypes = {
   activeCity: PropTypes.string.isRequired,
   onCityChange: PropTypes.func.isRequired,
 };
+
+export default React.memo(CitiesList);

@@ -1,3 +1,5 @@
+import {createAction} from '@reduxjs/toolkit';
+
 export const ActionType = {
   CHANGE_CITY: '/cityChange',
   LOAD_OFFERS: 'data/loadOffers',
@@ -9,39 +11,32 @@ export const ActionType = {
   UPDATE_REVIEWS: 'comments/updateReviews',
 };
 
-export const ActionCreator = {
-  changeCity: (city) => ({
-    type: ActionType.CHANGE_CITY,
-    payload: city,
-  }),
-  getOffers: () => ({
-    type: ActionType.FILTER_OFFERS,
-  }),
-  loadOffers: (offers) => ({
-    type: ActionType.LOAD_OFFERS,
-    payload: offers,
-  }),
-  requireAuthorization: (status) => ({
-    type: ActionType.REQUIRED_AUTHORIZATION,
-    payload: status,
-  }),
-  logout: () => ({
-    type: ActionType.LOGOUT,
-  }),
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
-    payload: url,
-  }),
-  updateOffer: (offer) => ({
-    type: ActionType.UPDATE_OFFER,
-    payload: offer,
-  }),
-  loadFullOfferInformation: (detailedOfferData, nearbyOffersData, reviewsData) => ({
-    type: ActionType.LOAD_FULL_OFFER_INFORMATION,
-    payload: {detailedOfferData, nearbyOffersData, reviewsData},
-  }),
-  updateReviews: (reviews) => ({
-    type: ActionType.UPDATE_REVIEWS,
-    payload: reviews,
-  }),
-};
+export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => ({
+  payload: city,
+}));
+
+export const loadOffers = createAction(ActionType.LOAD_OFFERS, (offers) => ({
+  payload: offers,
+}));
+
+export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
+  payload: status,
+}));
+
+export const makeLogout = createAction(ActionType.LOGOUT);
+
+export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
+  payload: url,
+}));
+
+export const updateOffer = createAction(ActionType.UPDATE_OFFER, (offer) => ({
+  payload: offer,
+}));
+
+export const loadFullOfferInformation = createAction(ActionType.LOAD_FULL_OFFER_INFORMATION, (detailedOfferData, nearbyOffersData, reviewsData) => ({
+  payload: {detailedOfferData, nearbyOffersData, reviewsData},
+}));
+
+export const updateReviews = createAction(ActionType.UPDATE_REVIEWS, (reviews) => ({
+  payload: reviews,
+}));
