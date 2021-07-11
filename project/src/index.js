@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import App from './components/app/app';
 import rootReducer from './store/root-reducer';
 import {requireAuthorization} from './store/action';
-import {checkAuth, fetchOffers, getFullOfferInformation} from './store/api-actions';
+import {checkAuth, fetchOffers, getFullOfferInformation, getFavoriteOffers} from './store/api-actions';
 import {AuthorizationStatus} from './const';
 import {redirect} from './store/middlewares/redirect';
 
@@ -31,11 +31,16 @@ const setFullOfferInformation = (offerId) => {
   store.dispatch(getFullOfferInformation(offerId));
 };
 
+const setFavoriteOffers = () => {
+  store.dispatch(getFavoriteOffers());
+};
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <App
         setFullOfferInformation={setFullOfferInformation}
+        setFavoriteOffers={setFavoriteOffers}
       />
     </Provider>
   </React.StrictMode>,

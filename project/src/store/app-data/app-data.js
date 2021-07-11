@@ -1,11 +1,13 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {loadOffers, updateOffer, loadFullOfferInformation, updateReviews} from '../action';
+import {loadOffers, updateOffer, loadFullOfferInformation, updateReviews, loadFavoriteOffers} from '../action';
 
 const initialState = {
   offers: [],
   isOffersLoaded: false,
   fullOfferInformation: {},
   isFullOfferInformationLoaded: false,
+  favoriteOffers: [],
+  isFavoriteOffersLoaded: false,
 };
 
 const appData = createReducer(initialState, (builder) => {
@@ -35,6 +37,10 @@ const appData = createReducer(initialState, (builder) => {
         ...state.fullOfferInformation,
         reviews: action.payload,
       };
+    })
+    .addCase(loadFavoriteOffers, (state, action) => {
+      state.favoriteOffers = action.payload;
+      state.isFavoriteOffersLoaded = true;
     });
 });
 

@@ -1,4 +1,4 @@
-import {loadOffers, requireAuthorization, redirectToRoute, makeLogout, updateOffer, loadFullOfferInformation, updateReviews} from './action';
+import {loadOffers, requireAuthorization, redirectToRoute, makeLogout, updateOffer, loadFullOfferInformation, updateReviews, loadFavoriteOffers} from './action';
 import {AuthorizationStatus, AppRoute, APIRoute} from '../const';
 import {adaptOfferToClient, adaptReviewToClient} from '../util/adapter';
 
@@ -58,4 +58,9 @@ export const postComment = (offerId, {comment, rating}) => (dispatch, _getState,
     .then(({data}) => {
       dispatch(updateReviews(data.map((review) => adaptReviewToClient(review))));
     })
+);
+
+export const getFavoriteOffers = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.FAVORITE)
+    .then(({data}) => dispatch(loadFavoriteOffers(data.map((favoriteOffer) => adaptOfferToClient(favoriteOffer)))))
 );
