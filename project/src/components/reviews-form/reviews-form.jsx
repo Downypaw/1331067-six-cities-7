@@ -95,6 +95,7 @@ export default function ReviewsForm() {
         onChange={(evt) => {
           setComment(evt.target.value);
         }}
+        data-testid="comment"
       >
       </textarea>
       <div className="reviews__button-wrapper">

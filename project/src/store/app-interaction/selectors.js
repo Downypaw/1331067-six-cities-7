@@ -1,3 +1,3 @@
-import {NameSpace} from '../root-reducer';
+import {NameSpace} from '../../const';
 
 export const getActiveCity = (state) => state[NameSpace.INTERACTION].activeCity;

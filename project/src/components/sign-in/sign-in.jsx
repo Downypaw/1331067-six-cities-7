@@ -53,6 +53,7 @@ export default function SignIn() {
                   name="email"
                   placeholder="Email"
                   required=""
+                  data-testid="login"
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -64,6 +65,7 @@ export default function SignIn() {
                   name="password"
                   placeholder="Password"
                   required=""
+                  data-testid="password"
                 />
               </div>
               <button

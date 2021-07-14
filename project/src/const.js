@@ -67,3 +67,9 @@ export const FavoriteButtonSize = {
     height: 33,
   },
 };
+
+export const NameSpace = {
+  DATA: 'DATA',
+  INTERACTION: 'INTERACTION',
+  USER: 'USER',
+};
