@@ -31,4 +31,4 @@ export const updatedOfferFromServer = {
   'rating': 4.8,
   'title': 'Beautiful & luxurious studio at great location',
   'type': 'apartment',
-}
+};

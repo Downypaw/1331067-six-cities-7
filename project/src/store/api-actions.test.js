@@ -116,7 +116,7 @@ describe('Async operations', () => {
       });
   });
 
-  it('should make a correct API call to GET full offer information', () => {
+  it('should make a correct API call to GET full offer information /offer/:id', () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
     const offerId = 1;
@@ -148,39 +148,7 @@ describe('Async operations', () => {
       });
   });
 
-  it('should make a correct API call to GET full offer information', () => {
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
-    const offerId = 1;
-    const toggleFavoriteLoader = getFullOfferInformation(offerId);
-
-    apiMock
-      .onGet(`${APIRoute.OFFERS}/${offerId}`)
-      .reply(200, updatedOfferFromServer);
-
-    apiMock
-      .onGet(`${APIRoute.OFFERS}/${offerId}/nearby`)
-      .reply(200, []);
-
-    apiMock
-      .onGet(`${APIRoute.REVIEWS}/${offerId}`)
-      .reply(200, []);
-
-    return toggleFavoriteLoader(dispatch, () => {}, api)
-      .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(1);
-        expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.LOAD_FULL_OFFER_INFORMATION,
-          payload: {
-            detailedOfferData: adaptOfferToClient(updatedOfferFromServer),
-            nearbyOffersData: [],
-            reviewsData: [],
-          },
-        });
-      });
-  });
-
-  it('should make a correct API call to POST comment', () => {
+  it('should make a correct API call to update comment', () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
     const offerId = 1;

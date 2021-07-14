@@ -17,15 +17,17 @@ describe('Component: ReviewsForm', () => {
     history.push(`/hotels/:${offerId}`);
 
     render(
-      <Provider store={mockStore({
-        [NameSpace.DATA]: {
-          fullOfferInformation: {
-            detailedOffer: {
-              id: 1,
-            }
-          }
-        }
-      })}>
+      <Provider
+        store={mockStore({
+          [NameSpace.DATA]: {
+            fullOfferInformation: {
+              detailedOffer: {
+                id: 1,
+              },
+            },
+          },
+        })}
+      >
         <Router history={history}>
           <ReviewsForm />
         </Router>

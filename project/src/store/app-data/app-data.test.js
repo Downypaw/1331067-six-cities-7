@@ -99,7 +99,7 @@ describe('Reducer: appData', () => {
         fullOfferInformation: {
           detailedOffer: detailedOfferData,
           nearbyOffers: nearbyOffersData,
-          reviews: reviewsData
+          reviews: reviewsData,
         },
         isFullOfferInformationLoaded: true,
         favoriteOffers: [],
