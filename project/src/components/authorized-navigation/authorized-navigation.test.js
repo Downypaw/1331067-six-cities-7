@@ -6,7 +6,6 @@ import userEvent from '@testing-library/user-event';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
 import AuthorizedNavigation from './authorized-navigation';
-import {logout} from '../../store/api-actions';
 import {AppRoute} from '../../const.js';
 
 let history = null;

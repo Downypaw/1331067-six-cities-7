@@ -13,6 +13,14 @@ let history = null;
 let store = null;
 let fakeComponent = null;
 
+jest.mock('../../components/card-information/card-information', () => {
+  const mockCardInformation = () => <>This is mock CardInformation</>;
+  return {
+    __esModule: true,
+    default: mockCardInformation,
+  };
+});
+
 const mockOffer = {
   bedrooms: 3,
   city: {
@@ -54,9 +62,7 @@ describe('Component: Card', () => {
 
     const createFakeStore = configureStore({});
 
-    store = createFakeStore({
-      USER: {authorizationStatus: AuthorizationStatus.NO_AUTH},
-    });
+    store = createFakeStore({});
 
     fakeComponent = (
       <Provider store={store}>

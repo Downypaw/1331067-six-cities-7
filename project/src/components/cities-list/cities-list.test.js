@@ -13,7 +13,7 @@ const createFakeStore = configureStore({});
 let history = null;
 let store = null;
 
-describe('Component: CardInformation', () => {
+describe('Component: CitiesList', () => {
   beforeAll(() => {
     history = createMemoryHistory();
 

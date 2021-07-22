@@ -5,13 +5,20 @@ import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
-import CardInformation from './card-information';
+import FavoriteButton from './favorite-button';
+import {FavoriteButtonType, AuthorizationStatus, AppRoute} from '../../const.js';
 
 const createFakeStore = configureStore({});
 
 let history = null;
-let fakeComponent = null;
 let store = null;
+let fakeComponent = null;
+
+const mockData = {
+  id: 1,
+  isFavorite: true,
+  pageType: FavoriteButtonType.CARD,
+};
 
 const mockOffer = {
   bedrooms: 3,
@@ -48,47 +55,43 @@ const mockOffer = {
   type: 'apartment',
 };
 
-jest.mock('../../components/favorite-button/favorite-button', () => {
-  const mockFavoriteButton = () => <>This is mock FavoriteButton</>;
-  return {
-    __esModule: true,
-    default: mockFavoriteButton,
-  };
-});
-
-describe('Component: CardInformation', () => {
+describe('Component: FavoriteButton', () => {
   beforeAll(() => {
     history = createMemoryHistory();
-
-    store = createFakeStore({});
   });
 
   it('should render correctly', () => {
+    store = createFakeStore({
+      USER: {authorizationStatus: AuthorizationStatus.NO_AUTH},
+    });
+
     render(
       <Provider store={store}>
         <Router history={history}>
-          <CardInformation offer={mockOffer}/>
-        </Router>
-      </Provider>
-  );
-
-    const titleElement = screen.getByText(`${mockOffer.title}`);
-
-    expect(titleElement).toBeInTheDocument();
-  });
-
-  it('when user click on title should redirect to offer page', () => {
-    const {getByText} = render(
-      <Provider store={store}>
-        <Router history={history}>
-          <CardInformation offer={mockOffer}/>
-          <Route exact path={`/offer/${mockOffer.id}`}><h1>Mock Offer Screen</h1></Route>
+          <FavoriteButton id={mockData.id} isFavorite={mockData.isFavorite} pageType={mockData.pageType}/>
         </Router>
       </Provider>
     );
 
-    userEvent.click(screen.getByRole('link'));
+    expect(screen.getByText('In bookmarks')).toBeInTheDocument();
+  });
 
-    expect(screen.getByText(/Mock Offer Screen/i)).toBeInTheDocument();
+  it('when unauthorized user click on button should redirect to Sign In Screen', () => {
+    store = createFakeStore({
+      USER: {authorizationStatus: AuthorizationStatus.NO_AUTH},
+    });
+
+    render(
+      <Provider store={store}>
+        <Router history={history}>
+          <FavoriteButton id={mockData.id} isFavorite={mockData.isFavorite} pageType={mockData.pageType}/>
+          <Route exact path={AppRoute.SIGN_IN}><h1>Mock Sign In Screen</h1></Route>
+        </Router>
+      </Provider>
+    );
+
+    userEvent.click(screen.getByRole('button'));
+
+    expect(screen.getByText('Mock Sign In Screen')).toBeInTheDocument();
   });
 });
