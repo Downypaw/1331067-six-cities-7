@@ -20,7 +20,7 @@ function Sorting(props) {
         {Object.values(SortType).map((sortType) => {
           const isActive = sortType === activeOption ? 'places__option--active' : '';
           return (
-            <li className={`places__option ${isActive}`} key={sortType} tabIndex="0"
+            <li className={`places__option ${isActive}`} key={sortType} tabIndex="0" data-testid={sortType}
               onClick={() => onOptionChange(sortType)}
             >
               {sortType}
