@@ -56,7 +56,7 @@ jest.mock('../../components/favorite-button/favorite-button', () => {
   };
 });
 
-describe('Component: Card', () => {
+describe('Component: CardInformation', () => {
   beforeAll(() => {
     history = createMemoryHistory();
 
