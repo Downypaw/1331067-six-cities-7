@@ -5,13 +5,13 @@ import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
-import Card from './card';
-import {logout} from '../../store/api-actions';
-import {AuthorizationStatus} from '../../const.js';
+import CardInformation from './card-information';
+
+const createFakeStore = configureStore({});
 
 let history = null;
-let store = null;
 let fakeComponent = null;
+let store = null;
 
 const mockOffer = {
   bedrooms: 3,
@@ -48,43 +48,49 @@ const mockOffer = {
   type: 'apartment',
 };
 
+jest.mock('../../components/favorite-button/favorite-button', () => {
+  const mockFavoriteButton = () => <>This is mock FavoriteButton</>;
+  return {
+    __esModule: true,
+    default: mockFavoriteButton,
+  };
+});
+
 describe('Component: Card', () => {
   beforeAll(() => {
     history = createMemoryHistory();
 
-    const createFakeStore = configureStore({});
-
-    store = createFakeStore({
-      USER: {authorizationStatus: AuthorizationStatus.NO_AUTH},
-    });
-
-    fakeComponent = (
-      <Provider store={store}>
-        <Router history={history}>
-          <Card offer={mockOffer} onOfferHover={jest.fn()}/>
-        </Router>
-      </Provider>
-    );
+    store = createFakeStore({});
   });
 
   it('should render correctly', () => {
-    render(fakeComponent);
-
-    expect(screen.getByAltText(/Place image/i)).toBeInTheDocument();
-  });
-
-  it('when user hover on offer should call callback', () => {
-    const offerHoverHandle = jest.fn();
     render(
       <Provider store={store}>
         <Router history={history}>
-          <Card offer={mockOffer} onOfferHover={offerHoverHandle}/>
+          <CardInformation offer={mockOffer}/>
+        </Router>
+      </Provider>
+  );
+
+    const titleElement = screen.getByText(`${mockOffer.title}`);
+
+    expect(titleElement).toBeInTheDocument();
+  });
+
+  it('when user click on title should redirect to offer page', () => {
+    const {getByText} = render(
+      <Provider store={store}>
+        <Router history={history}>
+          <CardInformation offer={mockOffer}/>
+          <Route exact path={`/offer/${mockOffer.id}`}><h1>Mock Offer Screen</h1></Route>
         </Router>
       </Provider>
     );
 
-    userEvent.hover(screen.getByRole('article'));
+    const titleElement = getByText(`${mockOffer.title}`);
 
-    expect(offerHoverHandle).toBeCalled();
+    userEvent.click(screen.getByRole('link'));
+
+    expect(screen.getByText(/Mock Offer Screen/i)).toBeInTheDocument();
   });
 });
