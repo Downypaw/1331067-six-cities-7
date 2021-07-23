@@ -7,10 +7,6 @@ import {AppRoute} from '../../const';
 export default function AuthorizedNavigation() {
   const dispatch = useDispatch();
 
-  const onLogoutButtonClick = () => {
-    dispatch(logout());
-  };
-
   return (
     <ul className="header__nav-list">
       <li className="header__nav-item user">
@@ -27,8 +23,8 @@ export default function AuthorizedNavigation() {
           <span
             className="header__signout"
             onClick={(evt) => {
+              dispatch(logout());
               evt.preventDefault();
-              onLogoutButtonClick();
             }}
             to='/'
           >

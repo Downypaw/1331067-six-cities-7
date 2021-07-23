@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useRef} from 'react';
-import useMap from '../../hooks/useMap';
+import useMap from '../../hooks/use-map';
 import {MapType} from '../../const';
 
 export default function Map({type, cityLocation, points, selectedPoint}) {
@@ -14,6 +14,7 @@ export default function Map({type, cityLocation, points, selectedPoint}) {
         ? {height: '100%'}
         : {}}
       ref={mapRef}
+      data-testid="map"
     >
     </section>
   );
