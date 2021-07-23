@@ -82,16 +82,22 @@ describe('Async operations', () => {
     const dispatch = jest.fn();
     const logoutLoader = logout();
 
+    Storage.prototype.removeItem = jest.fn();
+
     apiMock
       .onDelete(APIRoute.LOGOUT)
-      .reply(200);
+      .reply(204, [{fake: true}]);
 
-    return logoutLoader(dispatch, () => {}, api)
+    return logoutLoader(dispatch, jest.fn(() => {}), api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(1);
-        expect(dispatch).toHaveBeenNthCalledWith(1, {
+        expect(dispatch).toBeCalledTimes(1);
+        expect(dispatch).nthCalledWith(1, {
           type: ActionType.LOGOUT,
         });
+
+        expect(Storage.prototype.removeItem).toBeCalledTimes(2);
+        expect(Storage.prototype.removeItem).nthCalledWith(1, 'token');
+        expect(Storage.prototype.removeItem).nthCalledWith(2, 'login');
       });
   });
 
