@@ -19,7 +19,7 @@ describe('Component: UnauthorizedNavigation', () => {
     expect(linkElement).toBeInTheDocument();
   });
 
-  it('should render correctly', () => {
+  it('should redirect to sign in page when user click on "Sign in" button', () => {
     const history = createMemoryHistory();
     render(
       <Router history={history}>

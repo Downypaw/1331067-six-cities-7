@@ -10,7 +10,6 @@ import CardInformation from './card-information';
 const createFakeStore = configureStore({});
 
 let history = null;
-let fakeComponent = null;
 let store = null;
 
 const mockOffer = {
@@ -69,8 +68,8 @@ describe('Component: CardInformation', () => {
         <Router history={history}>
           <CardInformation offer={mockOffer}/>
         </Router>
-      </Provider>
-  );
+      </Provider>,
+    );
 
     const titleElement = screen.getByText(`${mockOffer.title}`);
 
@@ -78,13 +77,13 @@ describe('Component: CardInformation', () => {
   });
 
   it('when user click on title should redirect to offer page', () => {
-    const {getByText} = render(
+    render(
       <Provider store={store}>
         <Router history={history}>
           <CardInformation offer={mockOffer}/>
           <Route exact path={`/offer/${mockOffer.id}`}><h1>Mock Offer Screen</h1></Route>
         </Router>
-      </Provider>
+      </Provider>,
     );
 
     userEvent.click(screen.getByRole('link'));

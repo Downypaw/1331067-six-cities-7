@@ -1,8 +1,7 @@
 import React from 'react';
-import {Router, Route} from 'react-router-dom';
+import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import {render, screen} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
 import Review from './review';
@@ -37,7 +36,7 @@ describe('Component: Review', () => {
         <Router history={history}>
           <Review review={mockReview} />
         </Router>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByText(`${mockReview.comment}`)).toBeInTheDocument();

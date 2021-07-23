@@ -1,8 +1,7 @@
 import React from 'react';
-import {Router, Route} from 'react-router-dom';
+import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import {render, screen} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
 import ReviewsList from './reviews-list';
@@ -37,7 +36,7 @@ describe('Component: ReviewsList', () => {
         <Router history={history}>
           <ReviewsList reviews={mockReviews} />
         </Router>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByRole('list')).toHaveClass('reviews__list');

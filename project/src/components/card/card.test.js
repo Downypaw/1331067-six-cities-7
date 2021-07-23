@@ -1,13 +1,11 @@
 import React from 'react';
-import {Router, Route} from 'react-router-dom';
+import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
 import Card from './card';
-import {logout} from '../../store/api-actions';
-import {AuthorizationStatus} from '../../const.js';
 
 let history = null;
 let store = null;
@@ -86,7 +84,7 @@ describe('Component: Card', () => {
         <Router history={history}>
           <Card offer={mockOffer} onOfferHover={offerHoverHandle}/>
         </Router>
-      </Provider>
+      </Provider>,
     );
 
     userEvent.hover(screen.getByRole('article'));

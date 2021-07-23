@@ -1,8 +1,7 @@
 import React from 'react';
-import {Router, Route} from 'react-router-dom';
+import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import {render, screen} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
 import OffersList from './offers-list';
@@ -71,7 +70,7 @@ describe('Component: OffersList', () => {
         <Router history={history}>
           <OffersList activeCity={City.PARIS} offers={mockOffers} />
         </Router>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByText(`${mockOffers.length} places to stay in ${City.PARIS}`)).toBeInTheDocument();

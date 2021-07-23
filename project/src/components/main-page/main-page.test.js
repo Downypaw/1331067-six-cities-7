@@ -1,10 +1,11 @@
 import React from 'react';
-import {Router, Route} from 'react-router-dom';
+import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
+import * as Redux from 'react-redux';
 import MainPage from './main-page';
 import {City} from '../../const';
 
@@ -12,7 +13,6 @@ const createFakeStore = configureStore({});
 
 let history = null;
 let store = null;
-let fakeComponent = null;
 
 jest.mock('../../components/header/header', () => {
   const mockHeader = () => <>This is mock Header</>;
@@ -115,10 +115,28 @@ describe('Component: MainPageScreen', () => {
         <Router history={history}>
           <MainPage offers={mockOffers} />
         </Router>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByText(City.PARIS).parentNode).toHaveClass('tabs__item--active');
     expect(screen.getByRole('main')).toHaveClass('page__main--index');
+  });
+
+  it('should call dispatch when user change city', () => {
+    const dispatch = jest.fn();
+    const useDispatch = jest.spyOn(Redux, 'useDispatch');
+    useDispatch.mockReturnValue(dispatch);
+
+    render(
+      <Provider store={store}>
+        <Router history={history}>
+          <MainPage offers={mockOffers} />
+        </Router>
+      </Provider>,
+    );
+
+    userEvent.click(screen.getByText('Cologne'));
+
+    expect(useDispatch).toBeCalledTimes(1);
   });
 });

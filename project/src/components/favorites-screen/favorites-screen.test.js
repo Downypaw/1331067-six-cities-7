@@ -1,8 +1,7 @@
 import React from 'react';
-import {Router, Route} from 'react-router-dom';
+import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import {render, screen} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
 import FavoritesScreen from './favorites-screen';
@@ -11,7 +10,6 @@ const createFakeStore = configureStore({});
 
 let history = null;
 let store = null;
-let fakeComponent = null;
 
 jest.mock('../../components/card-information/card-information', () => {
   const mockCardInformation = () => <>This is mock CardInformation</>;
@@ -68,8 +66,8 @@ describe('Component: FavoriteScreen', () => {
           rating: 4.8,
           title: 'Beautiful & luxurious studio at great location',
           type: 'apartment',
-        }
-      ]}
+        },
+      ]},
     });
   });
 
@@ -79,7 +77,7 @@ describe('Component: FavoriteScreen', () => {
         <Router history={history}>
           <FavoritesScreen />
         </Router>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByText('Saved listing')).toBeInTheDocument();

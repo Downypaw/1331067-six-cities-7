@@ -1,8 +1,7 @@
 import React from 'react';
-import {Router, Route} from 'react-router-dom';
+import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import {render, screen} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
 import FavoriteCard from './favorite-card';
@@ -11,7 +10,6 @@ const createFakeStore = configureStore({});
 
 let history = null;
 let store = null;
-let fakeComponent = null;
 
 jest.mock('../../components/card-information/card-information', () => {
   const mockCardInformation = () => <>This is mock CardInformation</>;
@@ -69,7 +67,7 @@ describe('Component: FavoriteCard', () => {
         <Router history={history}>
           <FavoriteCard offer={mockOffer}/>
         </Router>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByRole('article')).toHaveClass('favorites__card');

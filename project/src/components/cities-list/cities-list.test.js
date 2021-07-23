@@ -1,5 +1,5 @@
 import React from 'react';
-import {Router, Route} from 'react-router-dom';
+import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -26,7 +26,7 @@ describe('Component: CitiesList', () => {
         <Router history={history}>
           <CitiesList activeCity={City.PARIS} onCityChange={() => {}}/>
         </Router>
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByText(City.PARIS)).toBeInTheDocument();
@@ -45,7 +45,7 @@ describe('Component: CitiesList', () => {
         <Router history={history}>
           <CitiesList activeCity={City.PARIS} onCityChange={cityChangeHandle}/>
         </Router>
-      </Provider>
+      </Provider>,
     );
 
     userEvent.click(screen.getByText(City.COLOGNE));
