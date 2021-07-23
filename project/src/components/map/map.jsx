@@ -14,6 +14,7 @@ export default function Map({type, cityLocation, points, selectedPoint}) {
         ? {height: '100%'}
         : {}}
       ref={mapRef}
+      data-testid="map"
     >
     </section>
   );
