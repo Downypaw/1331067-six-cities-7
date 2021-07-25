@@ -2,19 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Route, Redirect} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {getAuthorizationStatus} from '../../store/user/selectors';
-import {useSelector} from 'react-redux';
 
-export default function PrivateRoute({render, path, exact}) {
-  const authorizationStatus = useSelector(getAuthorizationStatus);
+export default function PrivateRoute({render, path, exact, redirectPath, authorizationFlag}) {
   return (
     <Route
       path={path}
       exact={exact}
       render={(routeProps) => (
-        authorizationStatus === AuthorizationStatus.AUTH
+        authorizationFlag
           ? render(routeProps)
-          : <Redirect to={AppRoute.SIGN_IN} />
+          : <Redirect to={redirectPath} />
       )}
     />
   );
@@ -24,4 +21,6 @@ PrivateRoute.propTypes = {
   exact: PropTypes.bool.isRequired,
   path: PropTypes.string.isRequired,
   render: PropTypes.func.isRequired,
+  redirectPath: PropTypes.string.isRequired,
+  authorizationFlag: PropTypes.bool.isRequired,
 };

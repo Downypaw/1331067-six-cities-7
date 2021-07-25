@@ -47,27 +47,29 @@ describe('Application Routing', () => {
     type: 'apartment',
   };
 
+  const mockStore = {
+    USER: {authorizationStatus: AuthorizationStatus.AUTH},
+    DATA: {
+      offers: [mockOffer],
+      isOffersLoaded: true,
+      fullOfferInformation: {
+        detailedOffer: mockOffer,
+        nearbyOffers: [],
+        reviews: [],
+      },
+      isFullOfferInformationLoaded: true,
+      favoriteOffers: [mockOffer],
+      isFavoriteOffersLoaded: true,
+    },
+    INTERACTION: {activeCity: City.PARIS},
+  }
+
   beforeAll(() => {
     history = createMemoryHistory();
 
     const createFakeStore = configureStore({});
 
-    store = createFakeStore({
-      USER: {authorizationStatus: AuthorizationStatus.AUTH},
-      DATA: {
-        offers: [mockOffer],
-        isOffersLoaded: true,
-        fullOfferInformation: {
-          detailedOffer: mockOffer,
-          nearbyOffers: [],
-          reviews: [],
-        },
-        isFullOfferInformationLoaded: true,
-        favoriteOffers: [mockOffer],
-        isFavoriteOffersLoaded: true,
-      },
-      INTERACTION: {activeCity: City.PARIS},
-    });
+    store = createFakeStore(mockStore);
 
     fakeApp = (
       <Provider store={store}>
@@ -89,6 +91,8 @@ describe('Application Routing', () => {
   });
 
   it('should render "SignInScreen" when user navigate to "/login"', () => {
+    mockStore.USER.authorizationStatus = AuthorizationStatus.NO_AUTH;
+
     history.push(AppRoute.SIGN_IN);
     render(fakeApp);
 
@@ -96,6 +100,8 @@ describe('Application Routing', () => {
   });
 
   it('should render "FavoritesScreen" when user navigate to "/favorites"', () => {
+    mockStore.USER.authorizationStatus = AuthorizationStatus.AUTH;
+
     history.push(AppRoute.FAVORITES);
     render(fakeApp);
 

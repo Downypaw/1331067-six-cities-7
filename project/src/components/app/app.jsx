@@ -22,6 +22,8 @@ export default function App(props) {
   const isFullOfferInformationLoaded = useSelector(getLoadedFullInformationStatus);
   const isFavoriteOffersLoaded = useSelector(getLoadedFavoriteOffersStatus);
 
+  const isAuthorized = authorizationStatus === AuthorizationStatus.AUTH;
+
   if (authorizationStatus === AuthorizationStatus.UNKNOWN || !isOffersLoaded) {
     return (
       <LoadingScreen />
@@ -38,6 +40,8 @@ export default function App(props) {
       <PrivateRoute
         exact
         path={AppRoute.FAVORITES}
+        redirectPath={AppRoute.SIGN_IN}
+        authorizationFlag = {isAuthorized}
         render={() => {
           setFavoriteOffers();
           return isFavoriteOffersLoaded ? <FavoritesScreen /> : <LoadingScreen />;
@@ -55,9 +59,14 @@ export default function App(props) {
       }}
       >
       </Route>
-      <Route exact path={AppRoute.SIGN_IN}>
-        <SignInScreen />
-      </Route>
+      <PrivateRoute
+        exact
+        path={AppRoute.SIGN_IN}
+        render={() => <SignInScreen />}
+        redirectPath={AppRoute.INDEX}
+        authorizationFlag = {!isAuthorized}
+      >
+      </PrivateRoute>
       <Route>
         <NotFoundScreen />
       </Route>
