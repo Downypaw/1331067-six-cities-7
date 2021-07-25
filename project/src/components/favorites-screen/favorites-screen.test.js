@@ -30,7 +30,9 @@ jest.mock('../../components/header/header', () => {
 describe('Component: FavoriteScreen', () => {
   beforeAll(() => {
     history = createMemoryHistory();
+  });
 
+  it('should render favorites list correctly', () => {
     store = createFakeStore({
       DATA: {favoriteOffers: [
         {
@@ -69,9 +71,7 @@ describe('Component: FavoriteScreen', () => {
         },
       ]},
     });
-  });
 
-  it('should render correctly', () => {
     render(
       <Provider store={store}>
         <Router history={history}>
@@ -81,5 +81,21 @@ describe('Component: FavoriteScreen', () => {
     );
 
     expect(screen.getByText('Saved listing')).toBeInTheDocument();
+  });
+
+  it('should render empty favorites list correctly', () => {
+    store = createFakeStore({
+      DATA: {favoriteOffers: []},
+    });
+
+    render(
+      <Provider store={store}>
+        <Router history={history}>
+          <FavoritesScreen />
+        </Router>
+      </Provider>,
+    );
+
+    expect(screen.getByText('Nothing yet saved.')).toBeInTheDocument();
   });
 });

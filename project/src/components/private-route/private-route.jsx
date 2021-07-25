@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Route, Redirect} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
 
 export default function PrivateRoute({render, path, exact, redirectPath, authorizationFlag}) {
   return (

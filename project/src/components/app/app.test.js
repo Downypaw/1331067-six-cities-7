@@ -62,7 +62,7 @@ describe('Application Routing', () => {
       isFavoriteOffersLoaded: true,
     },
     INTERACTION: {activeCity: City.PARIS},
-  }
+  };
 
   beforeAll(() => {
     history = createMemoryHistory();
