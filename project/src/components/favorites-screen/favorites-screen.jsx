@@ -4,13 +4,14 @@ import {getFavoriteOffers} from '../../store/app-data/selectors';
 import {City} from '../../const';
 import Header from '../header/header';
 import FavoriteItem from '../favorite-item/favorite-item';
+import EmptyFavoritesList from '../empty-favorites-list/empty-favorites-list';
 
 export default function FavoritesScreen() {
   const favoriteOffers = useSelector(getFavoriteOffers);
 
   const getOffersByCity = (city) => favoriteOffers.filter((favoriteOffer) => favoriteOffer.city.name === city);
 
-  return (
+  return favoriteOffers.length !== 0 ? (
     <div className="page">
       <Header />
 
@@ -33,5 +34,6 @@ export default function FavoritesScreen() {
         </a>
       </footer>
     </div>
-  );
+  )
+    : <EmptyFavoritesList />;
 }

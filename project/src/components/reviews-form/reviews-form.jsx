@@ -3,22 +3,34 @@ import {useState} from 'react';
 import {postComment} from '../../store/api-actions';
 import {getFullOfferInformation} from '../../store/app-data/selectors';
 import {useSelector, useDispatch} from 'react-redux';
+import {toast} from '../../util/toast';
 
 export default function ReviewsForm() {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
+  const [isSending, setSendingStatus] = useState(false);
 
   const offerId = useSelector(getFullOfferInformation).detailedOffer.id;
 
   const dispatch = useDispatch();
 
+  const resetForm = () => {
+    setRating(0);
+    setComment('');
+    setSendingStatus(false);
+  };
+
+  const badSubmittingHandle = () => {
+    resetForm();
+    toast('Не получилось отправить комментарий, проверьте ваше соединение');
+  };
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    dispatch(postComment(offerId, {comment, rating}));
+    setSendingStatus(true);
 
-    setRating(0);
-    setComment('');
+    dispatch(postComment(offerId, {comment, rating}, resetForm, badSubmittingHandle));
   };
 
   return (
@@ -31,6 +43,7 @@ export default function ReviewsForm() {
             setRating(Number(evt.target.value));
           }}
           checked={rating === 5}
+          disabled={isSending}
         />
         <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
           <svg className="form__star-image" width="37" height="33">
@@ -44,6 +57,7 @@ export default function ReviewsForm() {
             setRating(Number(evt.target.value));
           }}
           checked={rating === 4}
+          disabled={isSending}
         />
         <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
           <svg className="form__star-image" width="37" height="33">
@@ -57,6 +71,7 @@ export default function ReviewsForm() {
             setRating(Number(evt.target.value));
           }}
           checked={rating === 3}
+          disabled={isSending}
         />
         <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
           <svg className="form__star-image" width="37" height="33">
@@ -70,6 +85,7 @@ export default function ReviewsForm() {
             setRating(Number(evt.target.value));
           }}
           checked={rating === 2}
+          disabled={isSending}
         />
         <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
           <svg className="form__star-image" width="37" height="33">
@@ -83,6 +99,7 @@ export default function ReviewsForm() {
             setRating(Number(evt.target.value));
           }}
           checked={rating === 1}
+          disabled={isSending}
         />
         <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
           <svg className="form__star-image" width="37" height="33">
@@ -95,6 +112,7 @@ export default function ReviewsForm() {
         onChange={(evt) => {
           setComment(evt.target.value);
         }}
+        disabled={isSending}
         data-testid="comment"
       >
       </textarea>
@@ -105,7 +123,7 @@ export default function ReviewsForm() {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={comment.length < 50 || comment.length > 300 || rating === 0}
+          disabled={comment.length < 50 || comment.length > 300 || rating === 0 || isSending}
         >
           Submit
         </button>

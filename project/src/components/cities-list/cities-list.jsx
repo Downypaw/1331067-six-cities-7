@@ -13,7 +13,7 @@ function CitiesList(props) {
             <li className="locations__item" key={city}>
               <a
                 className={`locations__item-link tabs__item ${activeCity === city ? 'tabs__item--active' : ''}`} href="#"
-                onClick={(evt) => onCityChange(evt, city)}
+                onClick={() => onCityChange(city)}
               >
                 <span>{city}</span>
               </a>
