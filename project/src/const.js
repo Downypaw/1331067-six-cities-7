@@ -73,3 +73,5 @@ export const NameSpace = {
   INTERACTION: 'INTERACTION',
   USER: 'USER',
 };
+
+export const MAX_REVIEWS_COUNT = 10;

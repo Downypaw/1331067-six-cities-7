@@ -53,11 +53,13 @@ export const getFullOfferInformation = (offerId) => (dispatch, _getState, api) =
     })
 );
 
-export const postComment = (offerId, {comment, rating}) => (dispatch, _getState, api) => (
+export const postComment = (offerId, {comment, rating}, goodSubmittingHandle, badSubmittingHandle) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.REVIEWS}/${offerId}`, {comment, rating})
     .then(({data}) => {
+      goodSubmittingHandle();
       dispatch(updateReviews(data.map((review) => adaptReviewToClient(review))));
     })
+    .catch(() => badSubmittingHandle())
 );
 
 export const getFavoriteOffers = () => (dispatch, _getState, api) => (

@@ -1,11 +1,11 @@
-import React, {useRef} from 'react';
+import React, {useState} from 'react';
 import Logo from '../logo/logo';
 import {login} from '../../store/api-actions';
 import {useDispatch} from 'react-redux';
 
 export default function SignIn() {
-  const loginRef = useRef();
-  const passwordRef = useRef();
+  const [loginValue, setLogin] = useState('');
+  const [passwordValue, setPassword] = useState('');
 
   const dispatch = useDispatch();
 
@@ -13,8 +13,8 @@ export default function SignIn() {
     evt.preventDefault();
 
     dispatch(login({
-      login: loginRef.current.value,
-      password: passwordRef.current.value,
+      login: loginValue,
+      password: passwordValue,
     }));
   };
 
@@ -47,7 +47,7 @@ export default function SignIn() {
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
-                  ref={loginRef}
+                  onChange={(evt) => setLogin(evt.target.value)}
                   className="login__input form__input"
                   type="email"
                   name="email"
@@ -59,7 +59,7 @@ export default function SignIn() {
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
                 <input
-                  ref={passwordRef}
+                  onChange={(evt) => setPassword(evt.target.value)}
                   className="login__input form__input"
                   type="password"
                   name="password"
@@ -71,6 +71,7 @@ export default function SignIn() {
               <button
                 className="login__submit form__submit button"
                 type="submit"
+                disabled={!loginValue || !passwordValue || !passwordValue.replace(/ /gi, '').length}
               >
                 Sign in
               </button>
