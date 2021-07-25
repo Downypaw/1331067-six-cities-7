@@ -18,12 +18,12 @@ export default function ReviewsForm() {
     setRating(0);
     setComment('');
     setSendingStatus(false);
-  }
+  };
 
   const badSubmittingHandle = () => {
     resetForm();
     toast('Не получилось отправить комментарий, проверьте ваше соединение');
-  }
+  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();

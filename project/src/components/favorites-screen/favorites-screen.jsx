@@ -35,5 +35,5 @@ export default function FavoritesScreen() {
       </footer>
     </div>
   )
-  : <EmptyFavoritesList />;
+    : <EmptyFavoritesList />;
 }
