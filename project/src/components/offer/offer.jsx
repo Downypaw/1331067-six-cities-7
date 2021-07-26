@@ -1,11 +1,11 @@
 import React from 'react';
-import {nanoid} from 'nanoid';
 import ReviewsList from '../reviews-list/reviews-list';
 import ReviewsForm from '../reviews-form/reviews-form';
 import NearPlaceCard from '../near-place-card/near-place-card';
 import Map from '../map/map';
 import Header from '../header/header';
 import FavoriteButton from '../favorite-button/favorite-button';
+import {capitalizeFirstLetter} from '../../util/offer';
 import {MapType, MAX_IMAGES_COUNT, AuthorizationStatus, FavoriteButtonType} from '../../const';
 import {getFullOfferInformation} from '../../store/app-data/selectors';
 import {getAuthorizationStatus} from '../../store/user/selectors';
@@ -39,7 +39,7 @@ export default function Offer() {
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {images.slice(0, imagesForGalleryCount).map((image, index) => (
-                <div className="property__image-wrapper" key={nanoid()}>
+                <div className="property__image-wrapper" key={index.toString()}>
                   <img className="property__image" src={image} alt="Photo studio"/>
                 </div>
               ))}
@@ -66,7 +66,7 @@ export default function Offer() {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {type}
+                  {capitalizeFirstLetter(type)}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {bedrooms} Bedrooms
@@ -83,7 +83,7 @@ export default function Offer() {
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
                   {goods.map((good) => (
-                    <li key={nanoid()} className="property__inside-item">
+                    <li key={good} className="property__inside-item">
                       {good}
                     </li>
                   ))}
@@ -109,14 +109,11 @@ export default function Offer() {
                   </p>
                 </div>
               </div>
-              {
-                authorizationStatus === AuthorizationStatus.AUTH &&
-                <section className="property__reviews reviews">
-                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                  <ReviewsList reviews={reviews}/>
-                  <ReviewsForm />
-                </section>
-              }
+              <section className="property__reviews reviews">
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                <ReviewsList reviews={reviews}/>
+                {authorizationStatus === AuthorizationStatus.AUTH && <ReviewsForm />}
+              </section>
             </div>
           </div>
           <Map type={MapType.OFFER_PAGE} cityLocation={cityLocation} points={points} selectedPoint={detailedOffer.id}/>

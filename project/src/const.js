@@ -75,3 +75,8 @@ export const NameSpace = {
 };
 
 export const MAX_REVIEWS_COUNT = 10;
+
+export const ToastConfiguration = {
+  WITH_TIMEOUT: true,
+  WITHOUT_TIMEOUT: false,
+};

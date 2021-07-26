@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import FavoriteButton from '../favorite-button/favorite-button';
 import {FavoriteButtonType} from '../../const';
+import {capitalizeFirstLetter} from '../../util/offer';
 import offerProp from '../props-validation/offer.prop';
 
 export default function CardInformation(props) {
@@ -26,7 +27,7 @@ export default function CardInformation(props) {
       <h2 className="place-card__name">
         <Link to={`/offer/${id}`}>{title}</Link>
       </h2>
-      <p className="place-card__type">{type}</p>
+      <p className="place-card__type">{capitalizeFirstLetter(type)}</p>
     </React.Fragment>
   );
 }

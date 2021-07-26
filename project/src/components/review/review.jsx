@@ -1,5 +1,6 @@
 import React from 'react';
 import reviewProp from '../props-validation/review.prop';
+import {formatDate} from '../../util/offer';
 
 export default function Review(props) {
   const {review} = props;
@@ -24,7 +25,7 @@ export default function Review(props) {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{date}</time>
+        <time className="reviews__time" dateTime={date}>{formatDate(date)}</time>
       </div>
     </li>
   );

@@ -2,8 +2,8 @@ import {useEffect, useState} from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-const ICON_WIDTH = 30;
-const ICON_HEIGHT = 30;
+const ICON_WIDTH = 27;
+const ICON_HEIGHT = 39;
 const CORD_X = 15;
 const CORD_Y = 30;
 

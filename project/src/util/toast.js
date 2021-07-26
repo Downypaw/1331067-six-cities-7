@@ -1,6 +1,6 @@
 const SHOW_TIME = 5000;
 
-const toast = (message) => {
+const toast = (message, isTimeout = true) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';
   alertContainer.style.position = 'fixed';
@@ -10,15 +10,19 @@ const toast = (message) => {
   alertContainer.style.padding = '10px 3px';
   alertContainer.style.fontSize = '30px';
   alertContainer.style.textAlign = 'center';
-  alertContainer.style.backgroundColor = 'red';
+  alertContainer.style.backgroundColor = '#4481c3';
+  alertContainer.style.color = 'white';
 
   alertContainer.textContent = message;
 
   document.body.append(alertContainer);
 
-  setTimeout(() => {
-    alertContainer.remove();
-  }, SHOW_TIME);
+
+  if (isTimeout) {
+    setTimeout(() => {
+      alertContainer.remove();
+    }, SHOW_TIME);
+  }
 };
 
 export {toast};
