@@ -4,7 +4,7 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import {AuthorizationStatus, AppRoute, City} from '../../const';
+import {AuthorizationStatus, AppRoute, City, SortType} from '../../const';
 import App from './app';
 
 let history = null;
@@ -31,7 +31,7 @@ describe('Application Routing', () => {
       name: 'Angelina',
     },
     id: 1,
-    images: ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg'],
+    images: ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg'],
     isFavorite: false,
     isPremium: false,
     location: {
@@ -61,7 +61,7 @@ describe('Application Routing', () => {
       favoriteOffers: [mockOffer],
       isFavoriteOffersLoaded: true,
     },
-    INTERACTION: {activeCity: City.PARIS},
+    INTERACTION: {activeCity: City.PARIS, activeSortOption: SortType.POPULAR},
   };
 
   beforeAll(() => {

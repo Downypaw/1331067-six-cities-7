@@ -7,7 +7,7 @@ import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
 import * as Redux from 'react-redux';
 import MainPage from './main-page';
-import {City} from '../../const';
+import {City, SortType} from '../../const';
 
 const createFakeStore = configureStore({});
 
@@ -105,7 +105,8 @@ describe('Component: MainPageScreen', () => {
   beforeAll(() => {
     history = createMemoryHistory();
     store = createFakeStore({
-      INTERACTION: {activeCity: City.PARIS},
+      INTERACTION: {activeCity: City.PARIS, activeSortOption: SortType.POPULAR},
+      DATA: {offers: mockOffers},
     });
   });
 
@@ -113,7 +114,7 @@ describe('Component: MainPageScreen', () => {
     render(
       <Provider store={store}>
         <Router history={history}>
-          <MainPage offers={mockOffers} />
+          <MainPage />
         </Router>
       </Provider>,
     );
@@ -130,13 +131,13 @@ describe('Component: MainPageScreen', () => {
     render(
       <Provider store={store}>
         <Router history={history}>
-          <MainPage offers={mockOffers} />
+          <MainPage />
         </Router>
       </Provider>,
     );
 
     userEvent.click(screen.getByText('Cologne'));
 
-    expect(useDispatch).toBeCalledTimes(1);
+    expect(useDispatch).toBeCalled();
   });
 });

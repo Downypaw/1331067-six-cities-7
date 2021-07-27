@@ -1,33 +1,24 @@
 import React from 'react';
 import {useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 import Card from '../card/card';
 import Map from '../map/map';
 import Sorting from '../sorting/sorting';
-import offerProp from '../props-validation/offer.prop';
-import {MapType, SortType, SortProperty, SortDirection} from '../../const';
-import {sortByProperty} from '../../util/sorting';
+import {MapType} from '../../const';
+import {getActiveSortOption} from '../../store/app-interaction/selectors';
+import {getSortedOffers} from '../../store/app-data/selectors';
+import {changeSortOption} from '../../store/action';
 
 export default function OffersList(props) {
   const [selectedPoint, setSelectedPoint] = useState(0);
-  const [activeOption, setActiveOption] = useState(SortType.POPULAR);
 
-  const {offers, activeCity} = props;
+  const {activeCity} = props;
 
-  const getSortedOffers = (optionType) => {
-    switch (optionType) {
-      case SortType.TO_HIGH_PRICE:
-        return offers.slice().sort(sortByProperty(SortProperty.PRICE));
-      case SortType.TO_LOW_PRICE:
-        return offers.slice().sort(sortByProperty(SortProperty.PRICE, SortDirection.DESCENDING));
-      case SortType.TOP_RATED:
-        return offers.slice().sort(sortByProperty(SortProperty.RATING, SortDirection.DESCENDING));
-      default:
-        return offers;
-    }
-  };
+  const dispatch = useDispatch();
 
-  const sortedOffers = getSortedOffers(activeOption);
+  const sortedOffers = useSelector(getSortedOffers);
+  const activeOption = useSelector(getActiveSortOption);
 
   const cityLocation = sortedOffers[0].city.location;
   const points = sortedOffers.map((offer) => ({
@@ -44,14 +35,14 @@ export default function OffersList(props) {
   };
 
   const onOptionChange = (option) => {
-    setActiveOption(option);
+    dispatch(changeSortOption(option));
   };
 
   return (
     <div className="cities__places-container container">
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
-        <b className="places__found">{offers.length} places to stay in {activeCity}</b>
+        <b className="places__found">{sortedOffers.length} places to stay in {activeCity}</b>
         <Sorting activeOption={activeOption} onOptionChange={onOptionChange}/>
         <div className="cities__places-list places__list tabs__content">
           {sortedOffers.map((offer) => (
@@ -73,6 +64,5 @@ export default function OffersList(props) {
 }
 
 OffersList.propTypes = {
-  offers: PropTypes.arrayOf(offerProp).isRequired,
   activeCity: PropTypes.string.isRequired,
 };

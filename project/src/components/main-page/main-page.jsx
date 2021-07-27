@@ -1,16 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 import {changeCity} from '../../store/action';
 import OffersList from '../offers-list/offers-list';
 import EmptyOffersList from '../empty-offers-list/empty-offers-list';
 import Header from '../header/header';
 import CitiesList from '../cities-list/cities-list';
-import offerProp from '../props-validation/offer.prop';
 import {getActiveCity} from '../../store/app-interaction/selectors';
+import {getFiltratedOffers} from '../../store/app-data/selectors';
 
 export default function MainPage(props) {
-  const {offers} = props;
 
   const activeCity = useSelector(getActiveCity);
 
@@ -20,7 +18,7 @@ export default function MainPage(props) {
     dispatch(changeCity(city));
   };
 
-  const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
+  const filteredOffers = useSelector(getFiltratedOffers);
 
   return (
     <div className="page page--gray page--main">
@@ -37,7 +35,3 @@ export default function MainPage(props) {
     </div>
   );
 }
-
-MainPage.propTypes = {
-  offers: PropTypes.arrayOf(offerProp).isRequired,
-};

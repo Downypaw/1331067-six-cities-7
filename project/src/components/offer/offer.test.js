@@ -47,7 +47,7 @@ const mockOffer = {
     name: 'Angelina',
   },
   id: 1,
-  images: ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg'],
+  images: ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg'],
   isFavorite: false,
   isPremium: false,
   location: {

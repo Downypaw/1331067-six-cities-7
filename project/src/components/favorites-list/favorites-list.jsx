@@ -1,13 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {City} from '../../const';
+import {useSelector} from 'react-redux';
+import {getOffersByCities} from '../../store/app-data/selectors';
 import FavoriteItem from '../favorite-item/favorite-item';
-import offerProp from '../props-validation/offer.prop';
 
 export default function FavoritesScreen(props) {
-  const {favoriteOffers} = props;
-
-  const getOffersByCity = (city) => favoriteOffers.filter((favoriteOffer) => favoriteOffer.city.name === city);
+  const offerByCities = useSelector(getOffersByCities);
 
   return (
     <main className="page__main page__main--favorites">
@@ -15,17 +12,12 @@ export default function FavoritesScreen(props) {
         <section className="favorites">
           <h1 className="favorites__title">Saved listing</h1>
           <ul className="favorites__list">
-            {Object.values(City).map((city) => {
-              const offersByCity = getOffersByCity(city);
-              return offersByCity.length > 0 && <FavoriteItem key={city} city={city} offers={offersByCity}/>;
-            })}
+            {Object.entries(offerByCities).map(([city, offers]) => (
+              offers.length > 0 && <FavoriteItem key={city} city={city} offers={offers}/>
+            ))}
           </ul>
         </section>
       </div>
     </main>
   );
 }
-
-FavoritesScreen.propTypes = {
-  favoriteOffers: PropTypes.arrayOf(offerProp).isRequired,
-};

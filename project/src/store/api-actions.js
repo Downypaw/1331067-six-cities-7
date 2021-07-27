@@ -59,12 +59,12 @@ export const getFullOfferInformation = (offerId) => (dispatch, _getState, api) =
     .catch(() => toast('Не получилось подключиться. Необходимо проверить соединение или перезагрузить страницу', ToastConfiguration.WITHOUT_TIMEOUT))
 );
 
-export const postComment = (offerId, {comment, rating}, goodSubmittingHandle, badSubmittingHandle) => (dispatch, _getState, api) => (
+export const postComment = (offerId, {comment, rating}, resetFormHandle, badSubmittingHandle) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.REVIEWS}/${offerId}`, {comment, rating})
+    .finally(resetFormHandle)
     .then(({data}) => {
       dispatch(updateReviews(data.map((review) => adaptReviewToClient(review))));
     })
-    .then(goodSubmittingHandle)
     .catch(badSubmittingHandle)
 );
 

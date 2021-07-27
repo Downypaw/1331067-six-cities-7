@@ -5,7 +5,7 @@ import {render, screen} from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
 import OffersList from './offers-list';
-import {City} from '../../const';
+import {City, SortType} from '../../const';
 
 const createFakeStore = configureStore({});
 
@@ -60,7 +60,10 @@ const mockOffers = [
 describe('Component: OffersList', () => {
   beforeAll(() => {
     history = createMemoryHistory();
-    store = createFakeStore({});
+    store = createFakeStore({
+      DATA: {offers: mockOffers},
+      INTERACTION: {activeCity: City.PARIS, activeSortOption: SortType.POPULAR},
+    });
   });
 
   it('should render correctly', () => {
@@ -68,7 +71,7 @@ describe('Component: OffersList', () => {
     render(
       <Provider store={store}>
         <Router history={history}>
-          <OffersList activeCity={City.PARIS} offers={mockOffers} />
+          <OffersList activeCity={City.PARIS}/>
         </Router>
       </Provider>,
     );

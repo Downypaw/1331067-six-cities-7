@@ -8,6 +8,7 @@ import {
   loadFullOfferInformation,
   updateReviews,
   loadFavoriteOffers,
+  changeSortOption,
   ActionType
 } from './action';
 
@@ -21,6 +22,17 @@ describe('Actions', () => {
     };
 
     expect(changeCity(city)).toEqual(expectedAction);
+  });
+
+  it('action creator for changing sort option returns correct action', () => {
+    const option = '';
+
+    const expectedAction = {
+      type: ActionType.CHANGE_SORT_OPTION,
+      payload: option,
+    };
+
+    expect(changeSortOption(option)).toEqual(expectedAction);
   });
 
   it('action creator for loading offers returns correct action', () => {

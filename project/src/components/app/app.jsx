@@ -33,9 +33,7 @@ export default function App(props) {
   return (
     <Switch>
       <Route exact path={AppRoute.INDEX}>
-        <MainPageScreen
-          offers={offers}
-        />
+        <MainPageScreen />
       </Route>
       <PrivateRoute
         exact

@@ -21,7 +21,6 @@ export default function ReviewsForm() {
   };
 
   const badSubmittingHandle = () => {
-    resetForm();
     toast('Не получилось отправить комментарий, проверьте ваше соединение');
   };
 
